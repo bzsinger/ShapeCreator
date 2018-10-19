@@ -6,7 +6,7 @@ A fun project to practice using Objective-C and a programmatic UI.
 
 Here's a walkthrough of implemented user stories:
 
-![Walkthrough](https://github.com/bzsinger/ShapeCreator/gifs/coloredSquares.gif)
+![Walkthrough](https://github.com/bzsinger/ShapeCreator/blob/master/gifs/coloredSquares.gif)
 
 ## Functionality
 

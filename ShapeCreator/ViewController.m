@@ -26,7 +26,7 @@
     if (panGestureRecognizer.state == UIGestureRecognizerStateBegan) {
         currentOrigin = [panGestureRecognizer locationInView:self.view];
         currentSquare = [[UIView alloc] initWithFrame:CGRectMake(currentOrigin.x, currentOrigin.y, 0, 0)];
-        currentSquare.backgroundColor = [UIColor greenColor];
+        currentSquare.backgroundColor = [UIColor colorWithRed:(arc4random_uniform(256) / 256.0) green:(arc4random_uniform(256) / 256.0) blue:(arc4random_uniform(256) / 256.0) alpha:1];
         [self.view addSubview:currentSquare];
     }
     

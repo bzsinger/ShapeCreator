@@ -8,7 +8,10 @@
 
 #import "ViewController.h"
 
-@interface ViewController ()
+@interface ViewController () {
+    UIView *currentSquare;
+    CGPoint currentOrigin;
+};
 
 @end
 
@@ -20,7 +23,17 @@
 }
 
 - (void)didPan:(UIPanGestureRecognizer *)panGestureRecognizer {
-
+    if (panGestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        currentOrigin = [panGestureRecognizer locationInView:self.view];
+        currentSquare = [[UIView alloc] initWithFrame:CGRectMake(currentOrigin.x, currentOrigin.y, 0, 0)];
+        currentSquare.backgroundColor = [UIColor greenColor];
+        [self.view addSubview:currentSquare];
+    }
+    
+    if (panGestureRecognizer.state == UIGestureRecognizerStateChanged) {
+        CGPoint currentLocation = [panGestureRecognizer locationInView:self.view];
+        currentSquare.frame = CGRectMake(currentOrigin.x, currentOrigin.y, currentLocation.x - currentOrigin.x, currentLocation.y - currentOrigin.y);
+    }
 }
 
 - (void)didReceiveMemoryWarning {

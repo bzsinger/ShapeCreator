@@ -11,6 +11,7 @@
 @interface ViewController () {
     UIView *currentSquare;
     CGPoint currentOrigin;
+    CGPoint currentCenter;
 };
 
 @end
@@ -19,20 +20,31 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan:)]];
+    [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPanAcrossScreen:)]];
 }
 
-- (void)didPan:(UIPanGestureRecognizer *)panGestureRecognizer {
+- (void)didPanAcrossScreen:(UIPanGestureRecognizer *)panGestureRecognizer {
     if (panGestureRecognizer.state == UIGestureRecognizerStateBegan) {
         currentOrigin = [panGestureRecognizer locationInView:self.view];
         currentSquare = [[UIView alloc] initWithFrame:CGRectMake(currentOrigin.x, currentOrigin.y, 0, 0)];
         currentSquare.backgroundColor = [UIColor colorWithRed:(arc4random_uniform(256) / 256.0) green:(arc4random_uniform(256) / 256.0) blue:(arc4random_uniform(256) / 256.0) alpha:1];
+        
+        currentSquare.userInteractionEnabled = TRUE;
+        [currentSquare addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didMoveSquare:)]];
         [self.view addSubview:currentSquare];
-    }
-    
-    if (panGestureRecognizer.state == UIGestureRecognizerStateChanged) {
+    } else if (panGestureRecognizer.state == UIGestureRecognizerStateChanged) {
         CGPoint currentLocation = [panGestureRecognizer locationInView:self.view];
         currentSquare.frame = CGRectMake(currentOrigin.x, currentOrigin.y, currentLocation.x - currentOrigin.x, currentLocation.y - currentOrigin.y);
+    }
+}
+
+- (void)didMoveSquare:(UIPanGestureRecognizer *)panGestureRecognizer {
+    UIView *square = panGestureRecognizer.view;
+    if (panGestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        currentCenter = square.center;
+    } else if (panGestureRecognizer.state == UIGestureRecognizerStateChanged) {
+        CGPoint translation = [panGestureRecognizer translationInView:self.view];
+        square.center = CGPointMake(currentCenter.x + translation.x, currentCenter.y + translation.y);
     }
 }
 

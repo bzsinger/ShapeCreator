@@ -31,6 +31,11 @@
         
         currentSquare.userInteractionEnabled = TRUE;
         [currentSquare addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didMoveSquare:)]];
+
+        UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didDoubleTap:)];
+        tapGestureRecognizer.numberOfTapsRequired = 2;
+        [currentSquare addGestureRecognizer:tapGestureRecognizer];
+
         [self.view addSubview:currentSquare];
     } else if (panGestureRecognizer.state == UIGestureRecognizerStateChanged) {
         CGPoint currentLocation = [panGestureRecognizer locationInView:self.view];
@@ -45,6 +50,13 @@
     } else if (panGestureRecognizer.state == UIGestureRecognizerStateChanged) {
         CGPoint translation = [panGestureRecognizer translationInView:self.view];
         square.center = CGPointMake(currentCenter.x + translation.x, currentCenter.y + translation.y);
+    }
+}
+
+- (void)didDoubleTap:(UITapGestureRecognizer *)tapGestureRecognizer {
+    UIView *square = tapGestureRecognizer.view;
+    if (tapGestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        [self.view bringSubviewToFront:square];
     }
 }
 

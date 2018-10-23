@@ -32,9 +32,13 @@
         currentSquare.userInteractionEnabled = TRUE;
         [currentSquare addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didMoveSquare:)]];
 
-        UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didDoubleTap:)];
-        tapGestureRecognizer.numberOfTapsRequired = 2;
-        [currentSquare addGestureRecognizer:tapGestureRecognizer];
+        UITapGestureRecognizer *doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didDoubleTap:)];
+        doubleTapGestureRecognizer.numberOfTapsRequired = 2;
+        [currentSquare addGestureRecognizer:doubleTapGestureRecognizer];
+
+        UITapGestureRecognizer *tripleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTripleTap:)];
+        tripleTapGestureRecognizer.numberOfTapsRequired = 3;
+        [currentSquare addGestureRecognizer:tripleTapGestureRecognizer];
 
         [self.view addSubview:currentSquare];
     } else if (panGestureRecognizer.state == UIGestureRecognizerStateChanged) {
@@ -57,6 +61,17 @@
     UIView *square = tapGestureRecognizer.view;
     if (tapGestureRecognizer.state == UIGestureRecognizerStateEnded) {
         [self.view bringSubviewToFront:square];
+    }
+}
+
+- (void)didTripleTap:(UITapGestureRecognizer *)tapGestureRecognizer {
+    UIView *square = tapGestureRecognizer.view;
+    if (tapGestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        [UIView animateWithDuration:0.3 animations:^{
+            square.backgroundColor = [square.backgroundColor colorWithAlphaComponent:0];
+        } completion:^(BOOL finished) {
+            [square removeFromSuperview];
+        }];
     }
 }
 

@@ -7,11 +7,14 @@
 //
 
 #import "ViewController.h"
+#import "WalkthroughView.h"
+#import "WalkthroughViewController.h"
+#import "CanvasView.h"
+#import "CanvasViewController.h"
 
 @interface ViewController () {
-    UIView *currentSquare;
-    CGPoint currentOrigin;
-    CGPoint currentCenter;
+    WalkthroughViewController *walkthroughViewController;
+    CanvasViewController *canvasViewController;
 };
 
 @end
@@ -20,58 +23,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPanAcrossScreen:)]];
+    [self becomeFirstResponder];
+
+    CanvasView *canvasView = [[CanvasView alloc] initWithFrame:self.view.frame];
+    self->canvasViewController = [[CanvasViewController alloc] initWithCanvasView:canvasView];
+    [self.view addSubview:canvasView];
+
+    WalkthroughView *walkthroughView = [[WalkthroughView alloc] initWithFrame:self.view.frame];
+    self->walkthroughViewController = [[WalkthroughViewController alloc] initWithWalkthroughView:walkthroughView];
+    [self.view addSubview:walkthroughView];
 }
 
-- (void)didPanAcrossScreen:(UIPanGestureRecognizer *)panGestureRecognizer {
-    if (panGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        currentOrigin = [panGestureRecognizer locationInView:self.view];
-        currentSquare = [[UIView alloc] initWithFrame:CGRectMake(currentOrigin.x, currentOrigin.y, 0, 0)];
-        currentSquare.backgroundColor = [UIColor colorWithRed:(arc4random_uniform(256) / 256.0) green:(arc4random_uniform(256) / 256.0) blue:(arc4random_uniform(256) / 256.0) alpha:1];
-        
-        currentSquare.userInteractionEnabled = TRUE;
-        [currentSquare addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didMoveSquare:)]];
-
-        UITapGestureRecognizer *doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didDoubleTap:)];
-        doubleTapGestureRecognizer.numberOfTapsRequired = 2;
-        [currentSquare addGestureRecognizer:doubleTapGestureRecognizer];
-
-        UITapGestureRecognizer *tripleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTripleTap:)];
-        tripleTapGestureRecognizer.numberOfTapsRequired = 3;
-        [currentSquare addGestureRecognizer:tripleTapGestureRecognizer];
-
-        [self.view addSubview:currentSquare];
-    } else if (panGestureRecognizer.state == UIGestureRecognizerStateChanged) {
-        CGPoint currentLocation = [panGestureRecognizer locationInView:self.view];
-        currentSquare.frame = CGRectMake(currentOrigin.x, currentOrigin.y, currentLocation.x - currentOrigin.x, currentLocation.y - currentOrigin.y);
-    }
+- (BOOL)canBecomeFirstResponder {
+    return YES;
 }
 
-- (void)didMoveSquare:(UIPanGestureRecognizer *)panGestureRecognizer {
-    UIView *square = panGestureRecognizer.view;
-    if (panGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        currentCenter = square.center;
-    } else if (panGestureRecognizer.state == UIGestureRecognizerStateChanged) {
-        CGPoint translation = [panGestureRecognizer translationInView:self.view];
-        square.center = CGPointMake(currentCenter.x + translation.x, currentCenter.y + translation.y);
-    }
-}
-
-- (void)didDoubleTap:(UITapGestureRecognizer *)tapGestureRecognizer {
-    UIView *square = tapGestureRecognizer.view;
-    if (tapGestureRecognizer.state == UIGestureRecognizerStateEnded) {
-        [self.view bringSubviewToFront:square];
-    }
-}
-
-- (void)didTripleTap:(UITapGestureRecognizer *)tapGestureRecognizer {
-    UIView *square = tapGestureRecognizer.view;
-    if (tapGestureRecognizer.state == UIGestureRecognizerStateEnded) {
-        [UIView animateWithDuration:0.3 animations:^{
-            square.backgroundColor = [square.backgroundColor colorWithAlphaComponent:0];
-        } completion:^(BOOL finished) {
-            [square removeFromSuperview];
-        }];
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+    if (event.type == UIEventSubtypeMotionShake) {
+        [self->walkthroughViewController showWalkthroughView];
     }
 }
 

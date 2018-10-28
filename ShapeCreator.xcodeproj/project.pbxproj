@@ -16,6 +16,11 @@
 		3B5BDEC821795F70008EEA33 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5BDEC721795F70008EEA33 /* main.m */; };
 		3B5BDED221795F71008EEA33 /* ShapeCreatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5BDED121795F71008EEA33 /* ShapeCreatorTests.m */; };
 		3B5BDEDD21795F71008EEA33 /* ShapeCreatorUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5BDEDC21795F71008EEA33 /* ShapeCreatorUITests.m */; };
+		3B71B292218668EB00230D89 /* InstructionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B71B291218668EB00230D89 /* InstructionView.m */; };
+		3B805D5F2182366F00455C54 /* WalkthroughViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B805D5E2182366F00455C54 /* WalkthroughViewController.m */; };
+		3B805D622182370B00455C54 /* WalkthroughView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B805D612182370B00455C54 /* WalkthroughView.m */; };
+		3B805D652182BC0C00455C54 /* CanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B805D642182BC0C00455C54 /* CanvasView.m */; };
+		3B805D682182BC1F00455C54 /* CanvasViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B805D672182BC1F00455C54 /* CanvasViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +58,16 @@
 		3B5BDED821795F71008EEA33 /* ShapeCreatorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShapeCreatorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B5BDEDC21795F71008EEA33 /* ShapeCreatorUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShapeCreatorUITests.m; sourceTree = "<group>"; };
 		3B5BDEDE21795F71008EEA33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3B71B290218668EB00230D89 /* InstructionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InstructionView.h; sourceTree = "<group>"; };
+		3B71B291218668EB00230D89 /* InstructionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstructionView.m; sourceTree = "<group>"; };
+		3B805D5D2182366F00455C54 /* WalkthroughViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WalkthroughViewController.h; sourceTree = "<group>"; };
+		3B805D5E2182366F00455C54 /* WalkthroughViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WalkthroughViewController.m; sourceTree = "<group>"; };
+		3B805D602182370B00455C54 /* WalkthroughView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WalkthroughView.h; sourceTree = "<group>"; };
+		3B805D612182370B00455C54 /* WalkthroughView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WalkthroughView.m; sourceTree = "<group>"; };
+		3B805D632182BC0C00455C54 /* CanvasView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanvasView.h; sourceTree = "<group>"; };
+		3B805D642182BC0C00455C54 /* CanvasView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CanvasView.m; sourceTree = "<group>"; };
+		3B805D662182BC1F00455C54 /* CanvasViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanvasViewController.h; sourceTree = "<group>"; };
+		3B805D672182BC1F00455C54 /* CanvasViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CanvasViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +118,8 @@
 		3B5BDEB421795F6F008EEA33 /* ShapeCreator */ = {
 			isa = PBXGroup;
 			children = (
+				3B71B28F21864B1600230D89 /* Canvas */,
+				3B71B28E21864B0100230D89 /* Walkthrough */,
 				3B5BDEB521795F6F008EEA33 /* AppDelegate.h */,
 				3B5BDEB621795F6F008EEA33 /* AppDelegate.m */,
 				3B5BDEB821795F6F008EEA33 /* ViewController.h */,
@@ -133,6 +150,30 @@
 				3B5BDEDE21795F71008EEA33 /* Info.plist */,
 			);
 			path = ShapeCreatorUITests;
+			sourceTree = "<group>";
+		};
+		3B71B28E21864B0100230D89 /* Walkthrough */ = {
+			isa = PBXGroup;
+			children = (
+				3B805D5D2182366F00455C54 /* WalkthroughViewController.h */,
+				3B805D5E2182366F00455C54 /* WalkthroughViewController.m */,
+				3B805D602182370B00455C54 /* WalkthroughView.h */,
+				3B805D612182370B00455C54 /* WalkthroughView.m */,
+				3B71B290218668EB00230D89 /* InstructionView.h */,
+				3B71B291218668EB00230D89 /* InstructionView.m */,
+			);
+			path = Walkthrough;
+			sourceTree = "<group>";
+		};
+		3B71B28F21864B1600230D89 /* Canvas */ = {
+			isa = PBXGroup;
+			children = (
+				3B805D642182BC0C00455C54 /* CanvasView.m */,
+				3B805D632182BC0C00455C54 /* CanvasView.h */,
+				3B805D662182BC1F00455C54 /* CanvasViewController.h */,
+				3B805D672182BC1F00455C54 /* CanvasViewController.m */,
+			);
+			path = Canvas;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -268,6 +309,11 @@
 				3B5BDEC021795F6F008EEA33 /* ShapeCreator.xcdatamodeld in Sources */,
 				3B5BDEBA21795F6F008EEA33 /* ViewController.m in Sources */,
 				3B5BDEC821795F70008EEA33 /* main.m in Sources */,
+				3B71B292218668EB00230D89 /* InstructionView.m in Sources */,
+				3B805D622182370B00455C54 /* WalkthroughView.m in Sources */,
+				3B805D682182BC1F00455C54 /* CanvasViewController.m in Sources */,
+				3B805D652182BC0C00455C54 /* CanvasView.m in Sources */,
+				3B805D5F2182366F00455C54 /* WalkthroughViewController.m in Sources */,
 				3B5BDEB721795F6F008EEA33 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

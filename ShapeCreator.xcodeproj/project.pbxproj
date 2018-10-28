@@ -115,6 +115,8 @@
 		3B5BDEB421795F6F008EEA33 /* ShapeCreator */ = {
 			isa = PBXGroup;
 			children = (
+				3B71B28F21864B1600230D89 /* Canvas */,
+				3B71B28E21864B0100230D89 /* Walkthrough */,
 				3B5BDEB521795F6F008EEA33 /* AppDelegate.h */,
 				3B5BDEB621795F6F008EEA33 /* AppDelegate.m */,
 				3B5BDEB821795F6F008EEA33 /* ViewController.h */,
@@ -125,14 +127,6 @@
 				3B5BDEC621795F70008EEA33 /* Info.plist */,
 				3B5BDEC721795F70008EEA33 /* main.m */,
 				3B5BDEBE21795F6F008EEA33 /* ShapeCreator.xcdatamodeld */,
-				3B805D5D2182366F00455C54 /* WalkthroughViewController.h */,
-				3B805D5E2182366F00455C54 /* WalkthroughViewController.m */,
-				3B805D602182370B00455C54 /* WalkthroughView.h */,
-				3B805D612182370B00455C54 /* WalkthroughView.m */,
-				3B805D632182BC0C00455C54 /* CanvasView.h */,
-				3B805D642182BC0C00455C54 /* CanvasView.m */,
-				3B805D662182BC1F00455C54 /* CanvasViewController.h */,
-				3B805D672182BC1F00455C54 /* CanvasViewController.m */,
 			);
 			path = ShapeCreator;
 			sourceTree = "<group>";
@@ -153,6 +147,28 @@
 				3B5BDEDE21795F71008EEA33 /* Info.plist */,
 			);
 			path = ShapeCreatorUITests;
+			sourceTree = "<group>";
+		};
+		3B71B28E21864B0100230D89 /* Walkthrough */ = {
+			isa = PBXGroup;
+			children = (
+				3B805D5D2182366F00455C54 /* WalkthroughViewController.h */,
+				3B805D5E2182366F00455C54 /* WalkthroughViewController.m */,
+				3B805D602182370B00455C54 /* WalkthroughView.h */,
+				3B805D612182370B00455C54 /* WalkthroughView.m */,
+			);
+			path = Walkthrough;
+			sourceTree = "<group>";
+		};
+		3B71B28F21864B1600230D89 /* Canvas */ = {
+			isa = PBXGroup;
+			children = (
+				3B805D642182BC0C00455C54 /* CanvasView.m */,
+				3B805D632182BC0C00455C54 /* CanvasView.h */,
+				3B805D662182BC1F00455C54 /* CanvasViewController.h */,
+				3B805D672182BC1F00455C54 /* CanvasViewController.m */,
+			);
+			path = Canvas;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

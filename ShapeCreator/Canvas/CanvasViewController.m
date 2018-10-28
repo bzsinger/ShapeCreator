@@ -37,13 +37,12 @@
         currentSquare.userInteractionEnabled = TRUE;
         [currentSquare addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didMoveSquare:)]];
 
+        UITapGestureRecognizer *singleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didSingleTap:)];
+        [currentSquare addGestureRecognizer:singleTapGestureRecognizer];
+
         UITapGestureRecognizer *doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didDoubleTap:)];
         doubleTapGestureRecognizer.numberOfTapsRequired = 2;
         [currentSquare addGestureRecognizer:doubleTapGestureRecognizer];
-
-        UITapGestureRecognizer *tripleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTripleTap:)];
-        tripleTapGestureRecognizer.numberOfTapsRequired = 3;
-        [currentSquare addGestureRecognizer:tripleTapGestureRecognizer];
 
         [self->canvasView addSubview:currentSquare];
     } else if (panGestureRecognizer.state == UIGestureRecognizerStateChanged) {
@@ -62,14 +61,14 @@
     }
 }
 
-- (void)didDoubleTap:(UITapGestureRecognizer *)tapGestureRecognizer {
+- (void)didSingleTap:(UITapGestureRecognizer *)tapGestureRecognizer {
     UIView *square = tapGestureRecognizer.view;
     if (tapGestureRecognizer.state == UIGestureRecognizerStateEnded) {
         [self->canvasView bringSubviewToFront:square];
     }
 }
 
-- (void)didTripleTap:(UITapGestureRecognizer *)tapGestureRecognizer {
+- (void)didDoubleTap:(UITapGestureRecognizer *)tapGestureRecognizer {
     UIView *square = tapGestureRecognizer.view;
     if (tapGestureRecognizer.state == UIGestureRecognizerStateEnded) {
         [UIView animateWithDuration:0.3 animations:^{

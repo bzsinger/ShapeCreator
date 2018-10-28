@@ -7,15 +7,13 @@
 //
 
 #import "WalkthroughView.h"
+#import "InstructionView.h"
 
 @interface WalkthroughView () {
     UIView *instructionView;
-    UIImageView *singleTapImageView;
-    UILabel *singleTapLabel;
-    UIImageView *doubleTapImageView;
-    UILabel *doubleTapLabel;
-    UIImageView *panGestureImageView;
-    UILabel *panGestureLabel;
+    InstructionView *singleTapInstruction;
+    InstructionView *doubleTapInstruction;
+    InstructionView *panGestureInstruction;
 }
 
 @property (readwrite) UIButton *closeButton;
@@ -33,26 +31,14 @@
         [self.closeButton setTitle:@"Close" forState:UIControlStateNormal];
         [instructionView addSubview:self.closeButton];
 
-        singleTapImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
-        [instructionView addSubview:singleTapImageView];
+        panGestureInstruction = [[InstructionView alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"pan_gesture.png"] text:@"Create"];
+        [instructionView addSubview:panGestureInstruction];
 
-        singleTapLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [singleTapLabel setText:@"Bring shape to front"];
-        [instructionView addSubview:singleTapLabel];
+        singleTapInstruction = [[InstructionView alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"single_tap_gesture.png"] text:@"Bring to front"];
+        [instructionView addSubview:singleTapInstruction];
 
-        doubleTapImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
-        [instructionView addSubview:doubleTapImageView];
-
-        doubleTapLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [doubleTapLabel setText:@"Delete shape"];
-        [instructionView addSubview:doubleTapLabel];
-
-        panGestureImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
-        [instructionView addSubview:panGestureImageView];
-
-        panGestureLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [panGestureLabel setText:@"Create shape"];
-        [instructionView addSubview:panGestureLabel];
+        doubleTapInstruction = [[InstructionView alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"double_tap_gesture.png"] text:@"Delete"];
+        [instructionView addSubview:doubleTapInstruction];
     }
     return self;
 }
@@ -76,57 +62,9 @@
                                         buttonSize.width,
                                         buttonSize.height);
 
-    UIImage *singleTapImage = [UIImage imageNamed:@"single_tap_gesture.png"];
-    UIImage *doubleTapImage = [UIImage imageNamed:@"double_tap_gesture.png"];
-    UIImage *panGestureImage = [UIImage imageNamed:@"pan_gesture.png"];
-
-    UIGraphicsBeginImageContext(CGSizeMake(100, 100));
-    CGRect singleTapImageFrame = CGRectMake(CGRectGetWidth(instructionFrame) / 2 - 50,
-                                            0,
-                                            100,
-                                            100);
-    [singleTapImage drawInRect:singleTapImageFrame];
-    CGRect doubleTapImageFrame = CGRectMake(CGRectGetWidth(instructionFrame) / 2 - 50,
-                                            CGRectGetHeight(singleTapImageFrame) + 30,
-                                            100,
-                                            100);
-    [doubleTapImage drawInRect:doubleTapImageFrame];
-    CGRect panGestureImageFrame = CGRectMake(CGRectGetWidth(instructionFrame) / 2 - 50,
-                                            CGRectGetHeight(singleTapImageFrame) + CGRectGetHeight(doubleTapImageFrame) + 45,
-                                            100,
-                                            100);
-    [panGestureImage drawInRect:panGestureImageFrame];
-    UIGraphicsEndImageContext();
-
-    singleTapImageView.frame = singleTapImageFrame;
-    [singleTapImageView setImage:singleTapImage];
-
-    doubleTapImageView.frame = doubleTapImageFrame;
-    [doubleTapImageView setImage:doubleTapImage];
-
-    panGestureImageView.frame = panGestureImageFrame;
-    [panGestureImageView setImage:panGestureImage];
-
-    [singleTapLabel sizeToFit];
-    CGSize singleTapLabelSize = singleTapLabel.frame.size;
-    singleTapLabel.frame = CGRectMake(CGRectGetWidth(instructionFrame) / 2 - singleTapLabelSize.width / 2,
-                                      CGRectGetHeight(singleTapImageFrame),
-                                      singleTapLabelSize.width,
-                                      singleTapLabelSize.height);
-
-    [doubleTapLabel sizeToFit];
-    CGSize doubleTapLabelSize = doubleTapLabel.frame.size;
-    doubleTapLabel.frame = CGRectMake(CGRectGetWidth(instructionFrame) / 2 - doubleTapLabelSize.width / 2,
-                                      CGRectGetHeight(singleTapImageFrame) + CGRectGetHeight(singleTapLabel.frame) + CGRectGetHeight(doubleTapImageFrame),
-                                      doubleTapLabelSize.width,
-                                      doubleTapLabelSize.height);
-
-    [panGestureLabel sizeToFit];
-    CGSize panGestureLabelSize = panGestureLabel.frame.size;
-    panGestureLabel.frame = CGRectMake(CGRectGetWidth(instructionFrame) / 2 - panGestureLabelSize.width / 2,
-                                      CGRectGetHeight(singleTapImageFrame) + CGRectGetHeight(singleTapLabel.frame) + CGRectGetHeight(doubleTapImageFrame) + CGRectGetHeight(doubleTapLabel.frame) + CGRectGetHeight(panGestureImageFrame),
-                                      panGestureLabelSize.width,
-                                      panGestureLabelSize.height);
+    panGestureInstruction.frame = CGRectMake(0, 20, CGRectGetWidth(instructionView.frame), 125);
+    singleTapInstruction.frame = CGRectMake(0, CGRectGetHeight(singleTapInstruction.frame) + 70, CGRectGetWidth(instructionView.frame), 125);
+    doubleTapInstruction.frame = CGRectMake(0, CGRectGetHeight(singleTapInstruction.frame) + CGRectGetHeight(doubleTapInstruction.frame) + 120, CGRectGetWidth(instructionView.frame), 125);
 }
 
 @end

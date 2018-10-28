@@ -10,6 +10,9 @@
 
 @interface WalkthroughView () {
     UIView *instructionView;
+    UIImageView *singleTapImageView;
+    UIImageView *doubleTapImageView;
+    UIImageView *panGestureImageView;
 }
 
 @property (readwrite) UIButton *closeButton;
@@ -24,7 +27,16 @@
         [self addSubview:instructionView];
 
         self.closeButton = [UIButton buttonWithType:UIButtonTypeSystem];
-        [self addSubview:self.closeButton];
+        [instructionView addSubview:self.closeButton];
+
+        singleTapImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+        [instructionView addSubview:singleTapImageView];
+
+        doubleTapImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+        [instructionView addSubview:doubleTapImageView];
+
+        panGestureImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+        [instructionView addSubview:panGestureImageView];
     }
     return self;
 }
@@ -44,10 +56,41 @@
     [self.closeButton setTitle:@"Close" forState:UIControlStateNormal];
     [self.closeButton sizeToFit];
     CGSize buttonSize = self.closeButton.frame.size;
-    self.closeButton.frame = CGRectMake(CGRectGetWidth(self.frame) / 8 + CGRectGetWidth(instructionFrame) / 2 - buttonSize.width / 2,
-                                        CGRectGetHeight(self.frame) - CGRectGetHeight(self.frame) / 8 - buttonSize.height * 3 / 2,
+    self.closeButton.frame = CGRectMake(CGRectGetWidth(instructionView.frame) / 2 - CGRectGetWidth(self.closeButton.frame) / 2,
+                                        CGRectGetHeight(instructionView.frame) - CGRectGetHeight(self.closeButton.frame),
                                         buttonSize.width,
                                         buttonSize.height);
+
+    UIImage *singleTapImage = [UIImage imageNamed:@"single_tap_gesture.png"];
+    UIImage *doubleTapImage = [UIImage imageNamed:@"double_tap_gesture.png"];
+    UIImage *panGestureImage = [UIImage imageNamed:@"pan_gesture.png"];
+
+    UIGraphicsBeginImageContext(CGSizeMake(100, 100));
+    CGRect singleTapImageFrame = CGRectMake(CGRectGetWidth(instructionFrame) / 2 - 50,
+                                            0,
+                                            100,
+                                            100);
+    [singleTapImage drawInRect:singleTapImageFrame];
+    CGRect doubleTapImageFrame = CGRectMake(CGRectGetWidth(instructionFrame) / 2 - 50,
+                                            CGRectGetHeight(singleTapImageFrame),
+                                            100,
+                                            100);
+    [doubleTapImage drawInRect:doubleTapImageFrame];
+    CGRect panGestureImageFrame = CGRectMake(CGRectGetWidth(instructionFrame) / 2 - 50,
+                                            CGRectGetHeight(singleTapImageFrame) + CGRectGetHeight(doubleTapImageFrame),
+                                            100,
+                                            100);
+    [panGestureImage drawInRect:panGestureImageFrame];
+    UIGraphicsEndImageContext();
+
+    singleTapImageView.frame = singleTapImageFrame;
+    [singleTapImageView setImage:singleTapImage];
+
+    doubleTapImageView.frame = doubleTapImageFrame;
+    [doubleTapImageView setImage:doubleTapImage];
+
+    panGestureImageView.frame = panGestureImageFrame;
+    [panGestureImageView setImage:panGestureImage];
 }
 
 @end

@@ -20,17 +20,20 @@ Here's a walkthrough of implemented user stories:
 - [X] Walkthrough
     - [X] Basic walkthrough with images
     - [X] Shake device to show walkthrough
+    - [X] Only show on first startup and after shake
 
 🚫 The following functionality is under construction: 🔨
 
 - [ ] Custom color choices
+    - [ ] Expandable color wheel selector
 - [ ] Choose other shapes
     - [ ] Circles
     - [ ] Squares
 - [ ] Share creation as an image
 - [ ] Clear screen
+- [ ] Squares enlarge on selection
+- [ ] Haptic feedback after moving squares
 - [ ] Walkthrough
     - [ ] Multiple screens
     - [ ] Animations
-    - [ ] Only show on first startup and after shake
     - [ ] Add instruction to show walkthrough

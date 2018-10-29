@@ -19,8 +19,8 @@
 - (instancetype)initWithWalkthroughView:(WalkthroughView *)walkthroughView {
     if (self = [super init]) {
         self->walkthroughView = walkthroughView;
-        [self->walkthroughView.closeButton addTarget:self action:@selector(closeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-
+        [self->walkthroughView setHidden:[[NSUserDefaults standardUserDefaults] boolForKey:@"walkthroughClosed"]];
+        [self->walkthroughView.closeButton addTarget:self action:@selector(hideWalkthroughView) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:walkthroughView];
     }
     return self;
@@ -30,8 +30,9 @@
     [super viewDidLoad];
 }
 
-- (void)closeButtonClicked {
+- (void)hideWalkthroughView {
     self->walkthroughView.hidden = YES;
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"walkthroughClosed"];
 }
 
 - (void)showWalkthroughView {

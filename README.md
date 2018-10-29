@@ -6,7 +6,7 @@ A fun project to practice using Objective-C and a programmatic UI.
 
 Here's a walkthrough of implemented user stories:
 
-![Walkthrough](https://github.com/bzsinger/ShapeCreator/blob/master/gifs/walkthrough.gif)
+![Walkthrough](https://github.com/bzsinger/ShapeCreator/blob/master/gifs/squareMovement.gif)
 
 ## Functionality
 
@@ -15,6 +15,9 @@ Here's a walkthrough of implemented user stories:
 - [X] Create a square by panning
 - [X] Random square coloring
 - [X] Move squares around the screen
+    - [X] Resize while moving
+    - [X] Color transparency
+    - [X] Haptic feedback on start and end
 - [X] Tap a square to bring it to the front
 - [X] Double-tap to delete squares with animation
 - [X] Walkthrough
@@ -31,8 +34,6 @@ Here's a walkthrough of implemented user stories:
     - [ ] Squares
 - [ ] Share creation as an image
 - [ ] Clear screen
-- [ ] Squares enlarge on selection
-- [ ] Haptic feedback after moving squares
 - [ ] Walkthrough
     - [ ] Multiple screens
     - [ ] Animations

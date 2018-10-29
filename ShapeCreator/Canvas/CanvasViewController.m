@@ -15,6 +15,8 @@
 @implementation CanvasViewController {
     CanvasView *canvasView;
 
+    UIImpactFeedbackGenerator *feedbackGenerator;
+
     UIView *currentSquare;
     CGPoint currentOrigin;
     CGPoint currentCenter;
@@ -24,6 +26,8 @@
     if (self = [super init]) {
         self->canvasView = canvasView;
         [self->canvasView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPanAcrossScreen:)]];
+
+        feedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleMedium];
     }
     return self;
 }
@@ -55,9 +59,16 @@
     UIView *square = panGestureRecognizer.view;
     if (panGestureRecognizer.state == UIGestureRecognizerStateBegan) {
         currentCenter = square.center;
+        square.transform = CGAffineTransformMakeScale(1.05, 1.05);
+        [feedbackGenerator impactOccurred];
+        square.backgroundColor = [square.backgroundColor colorWithAlphaComponent:0.5];
     } else if (panGestureRecognizer.state == UIGestureRecognizerStateChanged) {
         CGPoint translation = [panGestureRecognizer translationInView:self->canvasView];
         square.center = CGPointMake(currentCenter.x + translation.x, currentCenter.y + translation.y);
+    } else {
+        square.transform = CGAffineTransformMakeScale(1, 1);
+        [feedbackGenerator impactOccurred];
+        square.backgroundColor = [square.backgroundColor colorWithAlphaComponent:1];
     }
 }
 

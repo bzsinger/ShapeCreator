@@ -17,6 +17,8 @@
 		3B5BDED221795F71008EEA33 /* ShapeCreatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5BDED121795F71008EEA33 /* ShapeCreatorTests.m */; };
 		3B5BDEDD21795F71008EEA33 /* ShapeCreatorUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5BDEDC21795F71008EEA33 /* ShapeCreatorUITests.m */; };
 		3B71B292218668EB00230D89 /* InstructionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B71B291218668EB00230D89 /* InstructionView.m */; };
+		3B71B2AA21951CBE00230D89 /* InstructionPaneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B71B2A921951CBE00230D89 /* InstructionPaneViewController.m */; };
+		3B71B2AD21951CF200230D89 /* InstructionPaneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B71B2AC21951CF200230D89 /* InstructionPaneView.m */; };
 		3B805D5F2182366F00455C54 /* WalkthroughViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B805D5E2182366F00455C54 /* WalkthroughViewController.m */; };
 		3B805D622182370B00455C54 /* WalkthroughView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B805D612182370B00455C54 /* WalkthroughView.m */; };
 		3B805D652182BC0C00455C54 /* CanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B805D642182BC0C00455C54 /* CanvasView.m */; };
@@ -60,6 +62,10 @@
 		3B5BDEDE21795F71008EEA33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3B71B290218668EB00230D89 /* InstructionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InstructionView.h; sourceTree = "<group>"; };
 		3B71B291218668EB00230D89 /* InstructionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstructionView.m; sourceTree = "<group>"; };
+		3B71B2A821951CBE00230D89 /* InstructionPaneViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InstructionPaneViewController.h; sourceTree = "<group>"; };
+		3B71B2A921951CBE00230D89 /* InstructionPaneViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstructionPaneViewController.m; sourceTree = "<group>"; };
+		3B71B2AB21951CF200230D89 /* InstructionPaneView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InstructionPaneView.h; sourceTree = "<group>"; };
+		3B71B2AC21951CF200230D89 /* InstructionPaneView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstructionPaneView.m; sourceTree = "<group>"; };
 		3B805D5D2182366F00455C54 /* WalkthroughViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WalkthroughViewController.h; sourceTree = "<group>"; };
 		3B805D5E2182366F00455C54 /* WalkthroughViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WalkthroughViewController.m; sourceTree = "<group>"; };
 		3B805D602182370B00455C54 /* WalkthroughView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WalkthroughView.h; sourceTree = "<group>"; };
@@ -161,6 +167,10 @@
 				3B805D612182370B00455C54 /* WalkthroughView.m */,
 				3B71B290218668EB00230D89 /* InstructionView.h */,
 				3B71B291218668EB00230D89 /* InstructionView.m */,
+				3B71B2A821951CBE00230D89 /* InstructionPaneViewController.h */,
+				3B71B2A921951CBE00230D89 /* InstructionPaneViewController.m */,
+				3B71B2AB21951CF200230D89 /* InstructionPaneView.h */,
+				3B71B2AC21951CF200230D89 /* InstructionPaneView.m */,
 			);
 			path = Walkthrough;
 			sourceTree = "<group>";
@@ -308,6 +318,7 @@
 			files = (
 				3B5BDEC021795F6F008EEA33 /* ShapeCreator.xcdatamodeld in Sources */,
 				3B5BDEBA21795F6F008EEA33 /* ViewController.m in Sources */,
+				3B71B2AD21951CF200230D89 /* InstructionPaneView.m in Sources */,
 				3B5BDEC821795F70008EEA33 /* main.m in Sources */,
 				3B71B292218668EB00230D89 /* InstructionView.m in Sources */,
 				3B805D622182370B00455C54 /* WalkthroughView.m in Sources */,
@@ -315,6 +326,7 @@
 				3B805D652182BC0C00455C54 /* CanvasView.m in Sources */,
 				3B805D5F2182366F00455C54 /* WalkthroughViewController.m in Sources */,
 				3B5BDEB721795F6F008EEA33 /* AppDelegate.m in Sources */,
+				3B71B2AA21951CBE00230D89 /* InstructionPaneViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

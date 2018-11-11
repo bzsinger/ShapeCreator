@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithFrame:(CGRect)frame image:(UIImage *)instructionImage text:(NSString *)instructionText;
 
+@property (nonatomic, strong, readonly) UIImageView *instructionImageView;
+
 @end
 
 NS_ASSUME_NONNULL_END

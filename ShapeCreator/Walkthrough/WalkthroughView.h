@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "InstructionPaneView.h"
 
 @interface WalkthroughView : UIView
 
+@property (nonatomic, strong, readonly) InstructionPaneView *instructionPaneView;
 @property (nonatomic, strong, readonly) UIButton *closeButton;
+@property (nonatomic, strong, readonly) UIButton *nextButton;
 
 @end

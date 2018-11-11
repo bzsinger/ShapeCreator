@@ -11,13 +11,11 @@
 
 @interface WalkthroughView () {
     UIView *instructionView;
-    InstructionView *panGestureInstruction;
-    InstructionView *singleTapInstruction;
-    InstructionView *doubleTapInstruction;
-    UILabel *shakePhoneLabel;
 }
 
+@property (readwrite) InstructionPaneView *instructionPaneView;
 @property (readwrite) UIButton *closeButton;
+@property (readwrite) UIButton *nextButton;
 
 @end
 
@@ -28,22 +26,16 @@
         instructionView = [[UIView alloc] initWithFrame:CGRectZero];
         [self addSubview:instructionView];
 
+        self.instructionPaneView = [[InstructionPaneView alloc] initWithFrame:CGRectZero];
+        [instructionView addSubview:self.instructionPaneView];
+
         self.closeButton = [UIButton buttonWithType:UIButtonTypeSystem];
         [self.closeButton setTitle:@"Close" forState:UIControlStateNormal];
         [instructionView addSubview:self.closeButton];
 
-        panGestureInstruction = [[InstructionView alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"pan_gesture.png"] text:@"Create"];
-        [instructionView addSubview:panGestureInstruction];
-
-        singleTapInstruction = [[InstructionView alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"single_tap_gesture.png"] text:@"Bring to front"];
-        [instructionView addSubview:singleTapInstruction];
-
-        doubleTapInstruction = [[InstructionView alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"double_tap_gesture.png"] text:@"Delete"];
-        [instructionView addSubview:doubleTapInstruction];
-
-        shakePhoneLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        shakePhoneLabel.text = @"Shake phone to show this view";
-        [instructionView addSubview:shakePhoneLabel];
+        self.nextButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        [self.nextButton setTitle:@"Next" forState:UIControlStateNormal];
+        [instructionView addSubview:self.nextButton];
     }
     return self;
 }
@@ -68,34 +60,20 @@
     instructionView.layer.borderWidth = 0.5;
 
     [self.closeButton sizeToFit];
-    CGSize buttonSize = self.closeButton.frame.size;
-    self.closeButton.frame = CGRectMake(CGRectGetWidth(instructionView.frame) / 2 - CGRectGetWidth(self.closeButton.frame) / 2,
-                                        CGRectGetHeight(instructionView.frame) - CGRectGetHeight(self.closeButton.frame),
-                                        buttonSize.width,
-                                        buttonSize.height);
+    CGSize closeButtonSize = self.closeButton.frame.size;
+    self.closeButton.frame = CGRectMake(CGRectGetWidth(instructionView.frame) - CGRectGetWidth(self.closeButton.frame) - 15.0,
+                                        CGRectGetHeight(instructionView.frame) - CGRectGetHeight(self.closeButton.frame) - 5,
+                                        closeButtonSize.width,
+                                        closeButtonSize.height);
 
-    CGFloat topBuffer = 20.0;
-    CGFloat instructionWidth = CGRectGetWidth(instructionView.frame);
-    CGFloat instructionHeight = 125.0;
-    CGFloat fullInstructionHeight = 30.0 + instructionHeight;
-    panGestureInstruction.frame = CGRectMake(0,
-                                             topBuffer,
-                                             instructionWidth,
-                                             instructionHeight);
-    singleTapInstruction.frame = CGRectMake(0,
-                                            topBuffer + fullInstructionHeight,
-                                            instructionWidth,
-                                            instructionHeight);
-    doubleTapInstruction.frame = CGRectMake(0,
-                                            topBuffer + 2 * (fullInstructionHeight),
-                                            instructionWidth,
-                                            instructionHeight);
+    [self.nextButton sizeToFit];
+    CGSize nextButtonSize = self.nextButton.frame.size;
+    self.nextButton.frame = CGRectMake(15,
+                            CGRectGetHeight(instructionView.frame) - CGRectGetHeight(self.nextButton.frame) - 5,
+                            nextButtonSize.width,
+                            nextButtonSize.height);
 
-    [shakePhoneLabel sizeToFit];
-    shakePhoneLabel.frame = CGRectMake(CGRectGetWidth(instructionView.frame) / 2 - CGRectGetWidth(shakePhoneLabel.frame) / 2,
-                                       topBuffer + 3 * (fullInstructionHeight),
-                                       CGRectGetWidth(shakePhoneLabel.frame),
-                                       CGRectGetHeight(shakePhoneLabel.frame));
+    self.instructionPaneView.frame = CGRectMake(0, 20, CGRectGetWidth(instructionFrame), CGRectGetHeight(instructionFrame) - closeButtonSize.height - 10);
 }
 
 @end

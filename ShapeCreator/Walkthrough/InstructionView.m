@@ -8,15 +8,20 @@
 
 #import "InstructionView.h"
 
-@implementation InstructionView {
-    UIImageView *instructionImageView;
+@interface InstructionView () {
     UILabel *instructionLabel;
 }
 
+@property (readwrite) UIImageView *instructionImageView;
+
+@end
+
+@implementation InstructionView
+
 - (instancetype)initWithFrame:(CGRect)frame image:(UIImage *)instructionImage text:(NSString *)instructionText {
     if (self = [super initWithFrame:frame]) {
-        instructionImageView = [[UIImageView alloc] initWithImage:instructionImage];
-        [self addSubview:instructionImageView];
+        self.instructionImageView = [[UIImageView alloc] initWithImage:instructionImage];
+        [self addSubview:self.instructionImageView];
 
         instructionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         instructionLabel.text = instructionText;
@@ -26,13 +31,13 @@
 }
 
 - (void)layoutSubviews {
-    instructionImageView.frame = CGRectMake(20, 0, 125, 125);
-    UIGraphicsBeginImageContext(CGSizeMake(125, 125));
-    [instructionImageView.image drawInRect:instructionImageView.frame];
+    self.instructionImageView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.width);
+    UIGraphicsBeginImageContext(CGSizeMake(self.frame.size.width, self.frame.size.width));
+    [self.instructionImageView.image drawInRect:self.instructionImageView.frame];
     UIGraphicsEndImageContext();
 
     [instructionLabel sizeToFit];
-    instructionLabel.frame = CGRectMake(CGRectGetMaxX(instructionImageView.frame), CGRectGetMidY(instructionImageView.frame), CGRectGetWidth(instructionLabel.frame), CGRectGetHeight(instructionLabel.frame));
+    instructionLabel.frame = CGRectMake(CGRectGetMidX(self.instructionImageView.frame) - CGRectGetWidth(instructionLabel.frame) / 2, CGRectGetMaxY(self.instructionImageView.frame) + 10, CGRectGetWidth(instructionLabel.frame), CGRectGetHeight(instructionLabel.frame));
 }
 
 @end

@@ -20,45 +20,45 @@
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
-        self.scrollView.pagingEnabled = YES;
-        self.scrollView.showsHorizontalScrollIndicator = NO;
-        [self addSubview:self.scrollView];
+        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+        _scrollView.pagingEnabled = YES;
+        _scrollView.showsHorizontalScrollIndicator = NO;
+        [self addSubview:_scrollView];
 
-        self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectZero];
-        self.pageControl.numberOfPages = 3;
-        self.pageControl.currentPage = 0;
-        self.pageControl.currentPageIndicatorTintColor = [UIColor blueColor];
-        self.pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
-        [self addSubview:self.pageControl];
+        _pageControl = [[UIPageControl alloc] initWithFrame:CGRectZero];
+        _pageControl.numberOfPages = 3;
+        _pageControl.currentPage = 0;
+        _pageControl.currentPageIndicatorTintColor = [UIColor blueColor];
+        _pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
+        [self addSubview:_pageControl];
 
         InstructionView *panGestureInstruction = [[InstructionView alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"pan_gesture.png"] text:@"Create"];
-        [self.scrollView addSubview:panGestureInstruction];
+        [_scrollView addSubview:panGestureInstruction];
 
         InstructionView *singleTapInstruction = [[InstructionView alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"single_tap_gesture.png"] text:@"Bring to front"];
-        [self.scrollView addSubview:singleTapInstruction];
+        [_scrollView addSubview:singleTapInstruction];
 
         InstructionView *doubleTapInstruction = [[InstructionView alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"double_tap_gesture.png"] text:@"Delete"];
-        [self.scrollView addSubview:doubleTapInstruction];
+        [_scrollView addSubview:doubleTapInstruction];
 
-        self.instructionViews = [NSArray<InstructionView*> arrayWithObjects:panGestureInstruction, singleTapInstruction, doubleTapInstruction, nil];
+        _instructionViews = [NSArray<InstructionView*> arrayWithObjects:panGestureInstruction, singleTapInstruction, doubleTapInstruction, nil];
 
-        [self bringSubviewToFront:self.pageControl];
+        [self bringSubviewToFront:_pageControl];
     }
 
     return self;
 }
 
 - (void)layoutSubviews {
-    [self.pageControl sizeToFit];
-    self.pageControl.frame = CGRectMake(0, CGRectGetHeight(self.frame) - CGRectGetHeight(self.pageControl.frame) - 10, CGRectGetWidth(self.pageControl.frame), CGRectGetHeight(self.pageControl.frame));
+    [_pageControl sizeToFit];
+    _pageControl.frame = CGRectMake(0, CGRectGetHeight(self.frame) - CGRectGetHeight(_pageControl.frame) - 10, CGRectGetWidth(_pageControl.frame), CGRectGetHeight(_pageControl.frame));
 
-    self.scrollView.frame = self.frame;
-    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame) * [self.instructionViews count], CGRectGetMinX(self.pageControl.frame));
+    _scrollView.frame = self.frame;
+    _scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame) * [_instructionViews count], CGRectGetMinX(_pageControl.frame));
 
-    for (int i = 0; i < [self.instructionViews count]; i++) {
-        CGRect frame = CGRectMake(CGRectGetWidth(self.frame) * i, 0, CGRectGetWidth(self.frame), CGRectGetMinX(self.pageControl.frame));
-        [self.instructionViews objectAtIndex:i].frame = frame;
+    for (int i = 0; i < [_instructionViews count]; i++) {
+        CGRect frame = CGRectMake(CGRectGetWidth(self.frame) * i, 0, CGRectGetWidth(self.frame), CGRectGetMinX(_pageControl.frame));
+        [_instructionViews objectAtIndex:i].frame = frame;
     }
 }
 

@@ -9,7 +9,7 @@
 #import "InstructionView.h"
 
 @interface InstructionView () {
-    UILabel *instructionLabel;
+    UILabel *_instructionLabel;
 }
 
 @property (readwrite) UIImageView *instructionImageView;
@@ -20,24 +20,24 @@
 
 - (instancetype)initWithFrame:(CGRect)frame image:(UIImage *)instructionImage text:(NSString *)instructionText {
     if (self = [super initWithFrame:frame]) {
-        self.instructionImageView = [[UIImageView alloc] initWithImage:instructionImage];
-        [self addSubview:self.instructionImageView];
+        _instructionImageView = [[UIImageView alloc] initWithImage:instructionImage];
+        [self addSubview:_instructionImageView];
 
-        instructionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        instructionLabel.text = instructionText;
-        [self addSubview:instructionLabel];
+        _instructionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        _instructionLabel.text = instructionText;
+        [self addSubview:_instructionLabel];
     }
     return self;
 }
 
 - (void)layoutSubviews {
-    self.instructionImageView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.width);
+    _instructionImageView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.width);
     UIGraphicsBeginImageContext(CGSizeMake(self.frame.size.width, self.frame.size.width));
-    [self.instructionImageView.image drawInRect:self.instructionImageView.frame];
+    [_instructionImageView.image drawInRect:_instructionImageView.frame];
     UIGraphicsEndImageContext();
 
-    [instructionLabel sizeToFit];
-    instructionLabel.frame = CGRectMake(CGRectGetMidX(self.instructionImageView.frame) - CGRectGetWidth(instructionLabel.frame) / 2, CGRectGetMaxY(self.instructionImageView.frame) + 10, CGRectGetWidth(instructionLabel.frame), CGRectGetHeight(instructionLabel.frame));
+    [_instructionLabel sizeToFit];
+    _instructionLabel.frame = CGRectMake(CGRectGetMidX(_instructionImageView.frame) - CGRectGetWidth(_instructionLabel.frame) / 2, CGRectGetMaxY(_instructionImageView.frame) + 10, CGRectGetWidth(_instructionLabel.frame), CGRectGetHeight(_instructionLabel.frame));
 }
 
 @end

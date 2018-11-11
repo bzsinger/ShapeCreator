@@ -19,8 +19,8 @@
 
 - (instancetype)initWithInstructionPaneView:(InstructionPaneView *)paneView {
     if (self = [super init]) {
-        self.instructionPaneView = paneView;
-        self.instructionPaneView.scrollView.delegate = self;
+        _instructionPaneView = paneView;
+        _instructionPaneView.scrollView.delegate = self;
     }
 
     return self;
@@ -32,7 +32,7 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    self.instructionPaneView.pageControl.currentPage = (NSInteger) roundf(scrollView.contentOffset.x / CGRectGetWidth(self.view.frame));
+    _instructionPaneView.pageControl.currentPage = (NSInteger) roundf(scrollView.contentOffset.x / CGRectGetWidth(self.view.frame));
 }
 
 @end

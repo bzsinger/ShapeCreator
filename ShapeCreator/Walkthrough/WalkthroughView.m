@@ -10,7 +10,7 @@
 #import "InstructionView.h"
 
 @interface WalkthroughView () {
-    UIView *instructionView;
+    UIView *_instructionView;
 }
 
 @property (readwrite) InstructionPaneView *instructionPaneView;
@@ -23,19 +23,19 @@
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        instructionView = [[UIView alloc] initWithFrame:CGRectZero];
-        [self addSubview:instructionView];
+        _instructionView = [[UIView alloc] initWithFrame:CGRectZero];
+        [self addSubview:_instructionView];
 
-        self.instructionPaneView = [[InstructionPaneView alloc] initWithFrame:CGRectZero];
-        [instructionView addSubview:self.instructionPaneView];
+        _instructionPaneView = [[InstructionPaneView alloc] initWithFrame:CGRectZero];
+        [_instructionView addSubview:_instructionPaneView];
 
-        self.closeButton = [UIButton buttonWithType:UIButtonTypeSystem];
-        [self.closeButton setTitle:@"Close" forState:UIControlStateNormal];
-        [instructionView addSubview:self.closeButton];
+        _closeButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        [_closeButton setTitle:@"Close" forState:UIControlStateNormal];
+        [_instructionView addSubview:_closeButton];
 
-        self.nextButton = [UIButton buttonWithType:UIButtonTypeSystem];
-        [self.nextButton setTitle:@"Next" forState:UIControlStateNormal];
-        [instructionView addSubview:self.nextButton];
+        _nextButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        [_nextButton setTitle:@"Next" forState:UIControlStateNormal];
+        [_instructionView addSubview:_nextButton];
     }
     return self;
 }
@@ -53,27 +53,27 @@
                                          frameWidth * dimensionMultiplier,
                                          frameHeight * dimensionMultiplier);
 
-    instructionView.frame = instructionFrame;
-    instructionView.backgroundColor = [UIColor whiteColor];
-    instructionView.layer.cornerRadius = 5.0;
-    instructionView.layer.borderColor = [UIColor blackColor].CGColor;
-    instructionView.layer.borderWidth = 0.5;
+    _instructionView.frame = instructionFrame;
+    _instructionView.backgroundColor = [UIColor whiteColor];
+    _instructionView.layer.cornerRadius = 5.0;
+    _instructionView.layer.borderColor = [UIColor blackColor].CGColor;
+    _instructionView.layer.borderWidth = 0.5;
 
-    [self.closeButton sizeToFit];
-    CGSize closeButtonSize = self.closeButton.frame.size;
-    self.closeButton.frame = CGRectMake(CGRectGetWidth(instructionView.frame) - CGRectGetWidth(self.closeButton.frame) - 15.0,
-                                        CGRectGetHeight(instructionView.frame) - CGRectGetHeight(self.closeButton.frame) - 5,
-                                        closeButtonSize.width,
-                                        closeButtonSize.height);
+    [_closeButton sizeToFit];
+    CGSize closeButtonSize = _closeButton.frame.size;
+    _closeButton.frame = CGRectMake(CGRectGetWidth(_instructionView.frame) - CGRectGetWidth(_closeButton.frame) - 15.0,
+                                    CGRectGetHeight(_instructionView.frame) - CGRectGetHeight(_closeButton.frame) - 5,
+                                    closeButtonSize.width,
+                                    closeButtonSize.height);
 
-    [self.nextButton sizeToFit];
-    CGSize nextButtonSize = self.nextButton.frame.size;
-    self.nextButton.frame = CGRectMake(15,
-                            CGRectGetHeight(instructionView.frame) - CGRectGetHeight(self.nextButton.frame) - 5,
-                            nextButtonSize.width,
-                            nextButtonSize.height);
+    [_nextButton sizeToFit];
+    CGSize nextButtonSize = _nextButton.frame.size;
+    _nextButton.frame = CGRectMake(15,
+                                   CGRectGetHeight(_instructionView.frame) - CGRectGetHeight(_nextButton.frame) - 5,
+                                   nextButtonSize.width,
+                                   nextButtonSize.height);
 
-    self.instructionPaneView.frame = CGRectMake(0, 20, CGRectGetWidth(instructionFrame), CGRectGetHeight(instructionFrame) - closeButtonSize.height - 10);
+    _instructionPaneView.frame = CGRectMake(0, 20, CGRectGetWidth(instructionFrame), CGRectGetHeight(instructionFrame) - closeButtonSize.height - 10);
 }
 
 @end

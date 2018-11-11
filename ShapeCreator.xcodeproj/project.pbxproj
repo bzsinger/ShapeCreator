@@ -165,12 +165,12 @@
 				3B805D5E2182366F00455C54 /* WalkthroughViewController.m */,
 				3B805D602182370B00455C54 /* WalkthroughView.h */,
 				3B805D612182370B00455C54 /* WalkthroughView.m */,
-				3B71B290218668EB00230D89 /* InstructionView.h */,
-				3B71B291218668EB00230D89 /* InstructionView.m */,
 				3B71B2A821951CBE00230D89 /* InstructionPaneViewController.h */,
 				3B71B2A921951CBE00230D89 /* InstructionPaneViewController.m */,
 				3B71B2AB21951CF200230D89 /* InstructionPaneView.h */,
 				3B71B2AC21951CF200230D89 /* InstructionPaneView.m */,
+				3B71B290218668EB00230D89 /* InstructionView.h */,
+				3B71B291218668EB00230D89 /* InstructionView.m */,
 			);
 			path = Walkthrough;
 			sourceTree = "<group>";

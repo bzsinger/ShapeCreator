@@ -32,10 +32,6 @@
     return self;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
-
 - (void)hideWalkthroughView {
     _walkthroughView.hidden = YES;
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"walkthroughClosed"];

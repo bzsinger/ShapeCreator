@@ -26,13 +26,8 @@
     return self;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    _instructionPaneView.pageControl.currentPage = (NSInteger) roundf(scrollView.contentOffset.x / CGRectGetWidth(self.view.frame));
+    _instructionPaneView.pageControl.currentPage = (NSInteger) roundf(scrollView.contentOffset.x / CGRectGetWidth(scrollView.frame));
 }
 
 - (void)scrollToNextInstruction {

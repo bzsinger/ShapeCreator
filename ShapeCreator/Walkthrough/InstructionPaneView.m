@@ -25,22 +25,23 @@
         _scrollView.showsHorizontalScrollIndicator = NO;
         [self addSubview:_scrollView];
 
-        _pageControl = [[UIPageControl alloc] initWithFrame:CGRectZero];
-        _pageControl.numberOfPages = 3;
-        _pageControl.currentPage = 0;
-        _pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
-        _pageControl.currentPageIndicatorTintColor = [UIColor blueColor];
-        [self addSubview:_pageControl];
-
         InstructionView *panGestureInstruction = [[InstructionView alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"pan_gesture.png"] text:@"Create"];
         InstructionView *singleTapInstruction = [[InstructionView alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"single_tap_gesture.png"] text:@"Bring to front"];
         InstructionView *doubleTapInstruction = [[InstructionView alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"double_tap_gesture.png"] text:@"Delete"];
+        InstructionView *test = [[InstructionView alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"double_tap_gesture.png"] text:@"Delete2"];
 
-        _instructionViews = [NSArray<InstructionView*> arrayWithObjects:panGestureInstruction, singleTapInstruction, doubleTapInstruction, nil];
+        _instructionViews = [NSArray<InstructionView*> arrayWithObjects:panGestureInstruction, singleTapInstruction, doubleTapInstruction, test, nil];
 
         for (int i = 0; i < [_instructionViews count]; i++) {
             [_scrollView addSubview:[_instructionViews objectAtIndex:i]];
         }
+
+        _pageControl = [[UIPageControl alloc] initWithFrame:CGRectZero];
+        _pageControl.numberOfPages = [_instructionViews count];
+        _pageControl.currentPage = 0;
+        _pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
+        _pageControl.currentPageIndicatorTintColor = [UIColor blueColor];
+        [self addSubview:_pageControl];
 
         [self bringSubviewToFront:_pageControl];
     }

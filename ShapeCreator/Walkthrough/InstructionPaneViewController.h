@@ -13,9 +13,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface InstructionPaneViewController : UIViewController <UIScrollViewDelegate>
 
+@property (nonatomic, strong, readonly) InstructionPaneView *instructionPaneView;
+
 - (instancetype)initWithInstructionPaneView:(InstructionPaneView *)paneView;
 
-@property (nonatomic, strong, readonly) InstructionPaneView *instructionPaneView;
+- (void)scrollToNextInstruction;
 
 @end
 

@@ -35,4 +35,18 @@
     _instructionPaneView.pageControl.currentPage = (NSInteger) roundf(scrollView.contentOffset.x / CGRectGetWidth(self.view.frame));
 }
 
+- (void)scrollToNextInstruction {
+    CGPoint currentOffset = _instructionPaneView.scrollView.contentOffset;
+    CGFloat scrollViewFrameWidth = CGRectGetWidth(_instructionPaneView.scrollView.frame);
+    CGFloat scrollViewContentWidth = _instructionPaneView.scrollView.contentSize.width;
+    CGFloat nextInstructionX = currentOffset.x + scrollViewFrameWidth;
+    if (nextInstructionX >= scrollViewContentWidth) {
+        nextInstructionX = 0;
+    }
+
+    [UIView animateWithDuration:0.2 animations:^ {
+        [self->_instructionPaneView.scrollView setContentOffset:CGPointMake(nextInstructionX, currentOffset.y) animated:NO];
+    }];
+}
+
 @end

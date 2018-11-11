@@ -46,30 +46,32 @@
 
     CGFloat frameWidth = CGRectGetWidth(self.frame);
     CGFloat frameHeight = CGRectGetHeight(self.frame);
-    CGFloat frameDivisor = 1.0 / 8.0;
+    CGFloat coordinateMultiplier = 1.0 / 8.0;
     CGFloat dimensionMultiplier = 3.0 / 4.0;
-    CGRect instructionFrame = CGRectMake(frameWidth * frameDivisor,
-                                         frameHeight * frameDivisor,
+    CGRect instructionFrame = CGRectMake(frameWidth * coordinateMultiplier,
+                                         frameHeight * coordinateMultiplier,
                                          frameWidth * dimensionMultiplier,
                                          frameHeight * dimensionMultiplier);
 
     _instructionView.frame = instructionFrame;
     _instructionView.backgroundColor = [UIColor whiteColor];
     _instructionView.layer.cornerRadius = 5.0;
-    _instructionView.layer.borderColor = [UIColor blackColor].CGColor;
     _instructionView.layer.borderWidth = 0.5;
+    _instructionView.layer.borderColor = [UIColor blackColor].CGColor;
 
+    CGFloat sideBuffer = 15.0;
+    CGFloat bottomBuffer = 5.0;
     [_closeButton sizeToFit];
     CGSize closeButtonSize = _closeButton.frame.size;
-    _closeButton.frame = CGRectMake(CGRectGetWidth(_instructionView.frame) - CGRectGetWidth(_closeButton.frame) - 15.0,
-                                    CGRectGetHeight(_instructionView.frame) - CGRectGetHeight(_closeButton.frame) - 5,
+    _closeButton.frame = CGRectMake(CGRectGetWidth(_instructionView.frame) - CGRectGetWidth(_closeButton.frame) - sideBuffer,
+                                    CGRectGetHeight(_instructionView.frame) - CGRectGetHeight(_closeButton.frame) - bottomBuffer,
                                     closeButtonSize.width,
                                     closeButtonSize.height);
 
     [_nextButton sizeToFit];
     CGSize nextButtonSize = _nextButton.frame.size;
-    _nextButton.frame = CGRectMake(15,
-                                   CGRectGetHeight(_instructionView.frame) - CGRectGetHeight(_nextButton.frame) - 5,
+    _nextButton.frame = CGRectMake(sideBuffer,
+                                   CGRectGetHeight(_instructionView.frame) - CGRectGetHeight(_nextButton.frame) - bottomBuffer,
                                    nextButtonSize.width,
                                    nextButtonSize.height);
 

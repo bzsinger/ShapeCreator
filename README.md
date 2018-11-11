@@ -6,7 +6,7 @@ A fun project to practice using Objective-C and a programmatic UI.
 
 Here's a walkthrough of implemented user stories:
 
-![Walkthrough](https://github.com/bzsinger/ShapeCreator/blob/master/gifs/updatedWalkthrough.gif)
+![Walkthrough](https://github.com/bzsinger/ShapeCreator/blob/master/gifs/updatedWalkthroughInstructions.gif)
 
 ## Functionality
 
@@ -34,6 +34,4 @@ Here's a walkthrough of implemented user stories:
     - [ ] Squares
 - [ ] Share creation as an image
 - [ ] Clear screen
-- [ ] Walkthrough
-    - [ ] Animations
-    - [ ] Add instruction to show walkthrough
+- [ ] Walkthrough animations

@@ -11,8 +11,8 @@
 #import "InstructionPaneViewController.h"
 
 @interface WalkthroughViewController () {
-    InstructionPaneViewController *instructionPaneViewController;
-    WalkthroughView *walkthroughView;
+    InstructionPaneViewController *_instructionPaneViewController;
+    WalkthroughView *_walkthroughView;
 };
 
 @end
@@ -21,42 +21,28 @@
 
 - (instancetype)initWithWalkthroughView:(WalkthroughView *)walkthroughView {
     if (self = [super init]) {
-        instructionPaneViewController = [[InstructionPaneViewController alloc] initWithInstructionPaneView:walkthroughView.instructionPaneView];
+        _instructionPaneViewController = [[InstructionPaneViewController alloc] initWithInstructionPaneView:walkthroughView.instructionPaneView];
 
-        self->walkthroughView = walkthroughView;
-        [self->walkthroughView setHidden:[[NSUserDefaults standardUserDefaults] boolForKey:@"walkthroughClosed"]];
-        [self->walkthroughView.closeButton addTarget:self action:@selector(hideWalkthroughView) forControlEvents:UIControlEventTouchUpInside];
-        [self->walkthroughView.nextButton addTarget:self action:@selector(nextInstructionSlide) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:walkthroughView];
+        _walkthroughView = walkthroughView;
+        [_walkthroughView setHidden:[[NSUserDefaults standardUserDefaults] boolForKey:@"walkthroughClosed"]];
+        [_walkthroughView.closeButton addTarget:self action:@selector(hideWalkthroughView) forControlEvents:UIControlEventTouchUpInside];
+        [_walkthroughView.nextButton addTarget:self action:@selector(scrollToNextInstruction) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:_walkthroughView];
     }
     return self;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
-
 - (void)hideWalkthroughView {
-    self->walkthroughView.hidden = YES;
+    _walkthroughView.hidden = YES;
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"walkthroughClosed"];
 }
 
 - (void)showWalkthroughView {
-    self->walkthroughView.hidden = NO;
+    _walkthroughView.hidden = NO;
 }
 
-- (void)nextInstructionSlide {
-    CGPoint currentOffset = self->walkthroughView.instructionPaneView.scrollView.contentOffset;
-    CGFloat scrollViewFrameWidth = CGRectGetWidth(self->walkthroughView.instructionPaneView.scrollView.frame);
-    CGFloat scrollViewContentWidth = self->walkthroughView.instructionPaneView.scrollView.contentSize.width;
-    CGFloat nextInstructionX = currentOffset.x + scrollViewFrameWidth;
-    if (nextInstructionX >= scrollViewContentWidth) {
-        nextInstructionX = 0;
-    }
-
-    [UIView animateWithDuration:0.2 animations:^ {
-        [self->walkthroughView.instructionPaneView.scrollView setContentOffset:CGPointMake(nextInstructionX, currentOffset.y) animated:NO];
-    }];
+- (void)scrollToNextInstruction {
+    [_instructionPaneViewController scrollToNextInstruction];
 }
 
 @end

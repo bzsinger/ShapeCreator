@@ -28,9 +28,10 @@
         InstructionView *panGestureInstruction = [[InstructionView alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"pan_gesture.png"] text:@"Create"];
         InstructionView *singleTapInstruction = [[InstructionView alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"single_tap_gesture.png"] text:@"Bring to front"];
         InstructionView *doubleTapInstruction = [[InstructionView alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"double_tap_gesture.png"] text:@"Delete"];
+        InstructionView *twoFingerPanInstruction = [[InstructionView alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"two_finger_pan_gesture.png"] text:@"Pan with two fingers to clear screen"];
         InstructionView *shakePhoneInstruction = [[InstructionView alloc] initWithFrame:CGRectZero image:[UIImage imageNamed:@"shake_phone_gesture.png"] text:@"Shake phone to show walkthrough"];
 
-        _instructionViews = [NSArray<InstructionView*> arrayWithObjects:panGestureInstruction, singleTapInstruction, doubleTapInstruction, shakePhoneInstruction, nil];
+        _instructionViews = [NSArray<InstructionView*> arrayWithObjects:panGestureInstruction, singleTapInstruction, doubleTapInstruction, twoFingerPanInstruction, shakePhoneInstruction, nil];
 
         for (int i = 0; i < [_instructionViews count]; i++) {
             [_scrollView addSubview:[_instructionViews objectAtIndex:i]];

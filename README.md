@@ -20,6 +20,7 @@ Here's a walkthrough of implemented user stories:
     - [X] Haptic feedback on start and end
 - [X] Tap a square to bring it to the front
 - [X] Double-tap to delete squares with animation
+- [X] Two-finger pan to clear screen
 - [X] Walkthrough
     - [X] Page controlled-walkthrough
     - [X] Shake device to show
@@ -33,5 +34,6 @@ Here's a walkthrough of implemented user stories:
     - [ ] Circles
     - [ ] Squares
 - [ ] Share creation as an image
-- [ ] Clear screen
 - [ ] Walkthrough animations
+- [ ] Pinch to expand squares
+- [ ] Rotate squares

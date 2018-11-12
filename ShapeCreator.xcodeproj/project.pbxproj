@@ -178,8 +178,8 @@
 		3B71B28F21864B1600230D89 /* Canvas */ = {
 			isa = PBXGroup;
 			children = (
-				3B805D642182BC0C00455C54 /* CanvasView.m */,
 				3B805D632182BC0C00455C54 /* CanvasView.h */,
+				3B805D642182BC0C00455C54 /* CanvasView.m */,
 				3B805D662182BC1F00455C54 /* CanvasViewController.h */,
 				3B805D672182BC1F00455C54 /* CanvasViewController.m */,
 			);

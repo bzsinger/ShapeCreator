@@ -13,61 +13,74 @@
 @end
 
 @implementation CanvasViewController {
-    CanvasView *canvasView;
+    CanvasView *_canvasView;
 
-    UIImpactFeedbackGenerator *feedbackGenerator;
+    UIImpactFeedbackGenerator *_feedbackGenerator;
 
-    UIView *currentSquare;
-    CGPoint currentOrigin;
-    CGPoint currentCenter;
+    UIView *_currentSquare;
+    CGPoint _currentOrigin;
+    CGPoint _currentCenter;
 }
 
 - (instancetype)initWithCanvasView:(CanvasView *)canvasView {
     if (self = [super init]) {
-        self->canvasView = canvasView;
-        [self->canvasView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPanAcrossScreen:)]];
+        _canvasView = canvasView;
+        [_canvasView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPanAcrossScreen:)]];
 
-        feedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleMedium];
+        UIPanGestureRecognizer *clearPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPerformClearScreenPan:)];
+        [clearPanGestureRecognizer setMaximumNumberOfTouches:2];
+        [clearPanGestureRecognizer setMinimumNumberOfTouches:2];
+        [_canvasView addGestureRecognizer:clearPanGestureRecognizer];
+
+        _feedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleMedium];
     }
     return self;
 }
 
 - (void)didPanAcrossScreen:(UIPanGestureRecognizer *)panGestureRecognizer {
     if (panGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        currentOrigin = [panGestureRecognizer locationInView:self->canvasView];
-        currentSquare = [[UIView alloc] initWithFrame:CGRectMake(currentOrigin.x, currentOrigin.y, 0, 0)];
-        currentSquare.backgroundColor = [UIColor colorWithRed:(arc4random_uniform(256) / 256.0) green:(arc4random_uniform(256) / 256.0) blue:(arc4random_uniform(256) / 256.0) alpha:1];
+        _currentOrigin = [panGestureRecognizer locationInView:_canvasView];
+        _currentSquare = [[UIView alloc] initWithFrame:CGRectMake(_currentOrigin.x, _currentOrigin.y, 0, 0)];
+        _currentSquare.backgroundColor = [UIColor colorWithRed:(arc4random_uniform(256) / 256.0) green:(arc4random_uniform(256) / 256.0) blue:(arc4random_uniform(256) / 256.0) alpha:1];
 
-        currentSquare.userInteractionEnabled = TRUE;
-        [currentSquare addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didMoveSquare:)]];
+        _currentSquare.userInteractionEnabled = TRUE;
+        [_currentSquare addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didMoveSquare:)]];
 
         UITapGestureRecognizer *singleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didSingleTap:)];
-        [currentSquare addGestureRecognizer:singleTapGestureRecognizer];
+        [_currentSquare addGestureRecognizer:singleTapGestureRecognizer];
 
         UITapGestureRecognizer *doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didDoubleTap:)];
         doubleTapGestureRecognizer.numberOfTapsRequired = 2;
-        [currentSquare addGestureRecognizer:doubleTapGestureRecognizer];
+        [_currentSquare addGestureRecognizer:doubleTapGestureRecognizer];
 
-        [self->canvasView addSubview:currentSquare];
+        [_canvasView addSubview:_currentSquare];
     } else if (panGestureRecognizer.state == UIGestureRecognizerStateChanged) {
-        CGPoint currentLocation = [panGestureRecognizer locationInView:self->canvasView];
-        currentSquare.frame = CGRectMake(currentOrigin.x, currentOrigin.y, currentLocation.x - currentOrigin.x, currentLocation.y - currentOrigin.y);
+        CGPoint currentLocation = [panGestureRecognizer locationInView:_canvasView];
+        _currentSquare.frame = CGRectMake(_currentOrigin.x, _currentOrigin.y, currentLocation.x - _currentOrigin.x, currentLocation.y - _currentOrigin.y);
+    }
+}
+
+- (void)didPerformClearScreenPan:(UIPanGestureRecognizer *)panGestureRecognizer {
+    if (panGestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        for (UIView *square in _canvasView.subviews) {
+            [square removeFromSuperview];
+        }
     }
 }
 
 - (void)didMoveSquare:(UIPanGestureRecognizer *)panGestureRecognizer {
     UIView *square = panGestureRecognizer.view;
     if (panGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        currentCenter = square.center;
+        _currentCenter = square.center;
         square.transform = CGAffineTransformMakeScale(1.05, 1.05);
-        [feedbackGenerator impactOccurred];
+        [_feedbackGenerator impactOccurred];
         square.backgroundColor = [square.backgroundColor colorWithAlphaComponent:0.5];
     } else if (panGestureRecognizer.state == UIGestureRecognizerStateChanged) {
-        CGPoint translation = [panGestureRecognizer translationInView:self->canvasView];
-        square.center = CGPointMake(currentCenter.x + translation.x, currentCenter.y + translation.y);
+        CGPoint translation = [panGestureRecognizer translationInView:_canvasView];
+        square.center = CGPointMake(_currentCenter.x + translation.x, _currentCenter.y + translation.y);
     } else {
         square.transform = CGAffineTransformMakeScale(1, 1);
-        [feedbackGenerator impactOccurred];
+        [_feedbackGenerator impactOccurred];
         square.backgroundColor = [square.backgroundColor colorWithAlphaComponent:1];
     }
 }
@@ -75,7 +88,7 @@
 - (void)didSingleTap:(UITapGestureRecognizer *)tapGestureRecognizer {
     UIView *square = tapGestureRecognizer.view;
     if (tapGestureRecognizer.state == UIGestureRecognizerStateEnded) {
-        [self->canvasView bringSubviewToFront:square];
+        [_canvasView bringSubviewToFront:square];
     }
 }
 
@@ -88,15 +101,6 @@
             [square removeFromSuperview];
         }];
     }
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

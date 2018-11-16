@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithInstructionPaneView:(InstructionPaneView *)paneView;
 
+- (void)reset;
 - (void)scrollToNextInstruction;
 
 @end

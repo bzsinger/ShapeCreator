@@ -13,8 +13,11 @@
 #import "CanvasViewController.h"
 
 @interface ViewController () {
-    WalkthroughViewController *walkthroughViewController;
-    CanvasViewController *canvasViewController;
+    WalkthroughViewController *_walkthroughViewController;
+    CanvasViewController *_canvasViewController;
+    CanvasView *_canvasView;
+
+    UIButton *_saveButton;
 };
 
 @end
@@ -25,12 +28,25 @@
     [super viewDidLoad];
     [self becomeFirstResponder];
 
-    CanvasView *canvasView = [[CanvasView alloc] initWithFrame:self.view.frame];
-    self->canvasViewController = [[CanvasViewController alloc] initWithCanvasView:canvasView];
-    [self.view addSubview:canvasView];
+    _canvasView = [[CanvasView alloc] initWithFrame:self.view.frame];
+    _canvasViewController = [[CanvasViewController alloc] initWithCanvasView:_canvasView];
+    [self.view addSubview:_canvasView];
+
+    _saveButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [_saveButton setTitle:@"Save" forState:UIControlStateNormal];
+    [self.view addSubview:_saveButton];
+    [_saveButton addTarget:self action:@selector(saveSnapshot) forControlEvents:UIControlEventTouchUpInside];
+
+    [_saveButton sizeToFit];
+    CGSize saveButtonSize = _saveButton.frame.size;
+    _saveButton.frame = CGRectMake(CGRectGetMaxX(self.view.frame) - saveButtonSize.width - 10,
+                                   CGRectGetMaxY(self.view.frame) - saveButtonSize.height - 5,
+                                   saveButtonSize.width,
+                                   saveButtonSize.height);
+    [self.view addSubview:_saveButton];
 
     WalkthroughView *walkthroughView = [[WalkthroughView alloc] initWithFrame:self.view.frame];
-    self->walkthroughViewController = [[WalkthroughViewController alloc] initWithWalkthroughView:walkthroughView];
+    _walkthroughViewController = [[WalkthroughViewController alloc] initWithWalkthroughView:walkthroughView];
     [self.view addSubview:walkthroughView];
 }
 
@@ -40,13 +56,20 @@
 
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
     if (event.type == UIEventSubtypeMotionShake) {
-        [self->walkthroughViewController showWalkthroughView];
+        [_walkthroughViewController showWalkthroughView];
     }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)saveSnapshot {
+    UIGraphicsBeginImageContextWithOptions(_canvasView.bounds.size, _canvasView.opaque, 0.0f);
+    CGContextRef graphicsContext = UIGraphicsGetCurrentContext();
+    [[UIColor whiteColor] setFill];
+    CGContextFillRect(graphicsContext, CGRectMake(0, 0, _canvasView.frame.size.width, _canvasView.frame.size.height));
+    [_canvasView drawViewHierarchyInRect:_canvasView.bounds afterScreenUpdates:NO];
+    UIImage *snapshotImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    UIImageWriteToSavedPhotosAlbum(snapshotImage, nil, nil, nil);
 }
 
 @end

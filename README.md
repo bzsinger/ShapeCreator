@@ -27,6 +27,7 @@ Here's a walkthrough of implemented user stories:
     - [X] Only show on first startup and after shake
     - [X] Resets to first instruction on show
 - [X] Save creation to Photos
+    - [X] Pop-up alert while saving
 
 🚫 The following functionality is under construction: 🔨
 
@@ -39,4 +40,4 @@ Here's a walkthrough of implemented user stories:
 - [ ] Walkthrough animations
 - [ ] Pinch to expand squares
 - [ ] Rotate squares
-- [ ] Improve UI for photo saving
+- [ ] Add tray with buttons to save, share, and show walkthrough

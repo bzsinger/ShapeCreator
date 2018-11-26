@@ -18,6 +18,7 @@
     CanvasView *_canvasView;
 
     UIButton *_saveButton;
+    UIAlertController *_imageSaveAlert;
 };
 
 @end
@@ -45,6 +46,10 @@
                                    saveButtonSize.height);
     [self.view addSubview:_saveButton];
 
+    _imageSaveAlert = [UIAlertController alertControllerWithTitle:@""
+                                                 message:@"Saving art..."
+                                          preferredStyle:UIAlertControllerStyleAlert];
+
     WalkthroughView *walkthroughView = [[WalkthroughView alloc] initWithFrame:self.view.frame];
     _walkthroughViewController = [[WalkthroughViewController alloc] initWithWalkthroughView:walkthroughView];
     [self.view addSubview:walkthroughView];
@@ -61,6 +66,8 @@
 }
 
 - (void)saveSnapshot {
+    [self presentViewController:_imageSaveAlert animated:YES completion:nil];
+
     UIGraphicsBeginImageContextWithOptions(_canvasView.bounds.size, _canvasView.opaque, 0.0f);
     CGContextRef graphicsContext = UIGraphicsGetCurrentContext();
     [[UIColor whiteColor] setFill];
@@ -69,7 +76,11 @@
     UIImage *snapshotImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
-    UIImageWriteToSavedPhotosAlbum(snapshotImage, nil, nil, nil);
+    UIImageWriteToSavedPhotosAlbum(snapshotImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+}
+
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+    [_imageSaveAlert dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

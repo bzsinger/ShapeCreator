@@ -13,8 +13,8 @@
 
     CGPoint _trayOriginalCenter;
     CGFloat _trayDownOffset;
-    CGPoint _trayUp;
-    CGPoint _trayDown;
+    CGPoint _trayOut;
+    CGPoint _trayIn;
 }
 
 @end
@@ -27,8 +27,8 @@
         [_trayView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPanTray:)]];
         [_trayView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapTray:)]];
 
-        _trayUp = _trayView.center;
-        _trayDown = CGPointMake(_trayView.center.x + 30, _trayView.center.y);
+        _trayOut = _trayView.center;
+        _trayIn = CGPointMake(_trayView.center.x + 30, _trayView.center.y);
     }
     return self;
 }
@@ -39,31 +39,37 @@
     if (panGestureRecognizer.state == UIGestureRecognizerStateBegan) {
         _trayOriginalCenter = _trayView.center;
     } else if (panGestureRecognizer.state == UIGestureRecognizerStateChanged) {
-        if (_trayOriginalCenter.y + translation.y < _trayView.frame.size.height) {
-            _trayView.center = CGPointMake(_trayOriginalCenter.x, _trayOriginalCenter.y + translation.y);
+        if (-1 * (translation.x) + _trayView.frame.size.width / 2 < _trayView.frame.size.width) {
+            _trayView.center = CGPointMake(_trayOriginalCenter.x + translation.x, _trayOriginalCenter.y);
         }
     } else if (panGestureRecognizer.state == UIGestureRecognizerStateEnded) {
         CGPoint velocity = [panGestureRecognizer velocityInView:_trayView];
-        [UIView animateWithDuration:0.5 animations:^{
-            if (velocity.y < 0) {
-                self->_trayView.center = self->_trayUp;
-            } else {
-                self->_trayView.center = self->_trayDown;
-            }
-        }];
+        if (velocity.x < 0) {
+            [self openTrayView];
+        } else {
+            [self closeTrayView];
+        }
     }
 }
 
 - (void)didTapTray:(UITapGestureRecognizer *)tapGestureRecognizer {
-    CGPoint destination = CGPointZero;
-    if (CGPointEqualToPoint(_trayView.center, _trayUp)) {
-        destination = _trayDown;
+    if (CGPointEqualToPoint(_trayView.center, _trayOut)) {
+        [self closeTrayView];
     } else {
-        destination = _trayUp;
+        [self openTrayView];
     }
+}
 
+- (void)openTrayView {
     [UIView animateWithDuration:0.5 animations:^{
-        self->_trayView.center = destination;
+        self->_trayView.center = self->_trayOut;
     }];
 }
+
+- (void)closeTrayView {
+    [UIView animateWithDuration:0.5 animations:^{
+        self->_trayView.center = self->_trayIn;
+    }];
+}
+
 @end

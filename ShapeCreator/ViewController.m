@@ -46,7 +46,7 @@
     _walkthroughViewController = [[WalkthroughViewController alloc] initWithWalkthroughView:walkthroughView];
     [self.view addSubview:walkthroughView];
 
-    _trayView = [[TrayView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame) - 50, 100, 100, 150)];
+    _trayView = [[TrayView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame) - 50, 100, 200, 150)];
     _trayView.delegate = self;
     _trayViewController = [[TrayViewController alloc] initWithTrayView:_trayView];
     [self.view addSubview:_trayView];
@@ -63,6 +63,7 @@
 }
 
 - (void)saveButtonTapped {
+    [_trayViewController closeTrayView];
     [self presentViewController:_imageSaveAlert animated:YES completion:nil];
 
     UIGraphicsBeginImageContextWithOptions(_canvasView.bounds.size, _canvasView.opaque, 0.0f);
@@ -81,6 +82,7 @@
 }
 
 - (void)walkthroughButtonTapped {
+    [_trayViewController closeTrayView];
     [_walkthroughViewController showWalkthroughView];
 }
 

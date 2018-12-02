@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithTrayView:(TrayView *)trayView;
 
+- (void)closeTrayView;
+
 @end
 
 NS_ASSUME_NONNULL_END

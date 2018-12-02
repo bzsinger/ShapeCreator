@@ -29,6 +29,8 @@
 
         _trayOut = _trayView.center;
         _trayIn = CGPointMake(_trayView.center.x + 30, _trayView.center.y);
+
+        _trayView.center = _trayIn;
     }
     return self;
 }

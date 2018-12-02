@@ -23,6 +23,8 @@
 		3B805D622182370B00455C54 /* WalkthroughView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B805D612182370B00455C54 /* WalkthroughView.m */; };
 		3B805D652182BC0C00455C54 /* CanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B805D642182BC0C00455C54 /* CanvasView.m */; };
 		3B805D682182BC1F00455C54 /* CanvasViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B805D672182BC1F00455C54 /* CanvasViewController.m */; };
+		3BE18DCB21ABBDBD00EB8D79 /* TrayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE18DCA21ABBDBD00EB8D79 /* TrayView.m */; };
+		3BE18DCE21ACFA2700EB8D79 /* TrayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE18DCD21ACFA2700EB8D79 /* TrayViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +76,10 @@
 		3B805D642182BC0C00455C54 /* CanvasView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CanvasView.m; sourceTree = "<group>"; };
 		3B805D662182BC1F00455C54 /* CanvasViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanvasViewController.h; sourceTree = "<group>"; };
 		3B805D672182BC1F00455C54 /* CanvasViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CanvasViewController.m; sourceTree = "<group>"; };
+		3BE18DC921ABBDBD00EB8D79 /* TrayView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TrayView.h; sourceTree = "<group>"; };
+		3BE18DCA21ABBDBD00EB8D79 /* TrayView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrayView.m; sourceTree = "<group>"; };
+		3BE18DCC21ACFA2700EB8D79 /* TrayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TrayViewController.h; sourceTree = "<group>"; };
+		3BE18DCD21ACFA2700EB8D79 /* TrayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrayViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +132,7 @@
 			children = (
 				3B71B28F21864B1600230D89 /* Canvas */,
 				3B71B28E21864B0100230D89 /* Walkthrough */,
+				3BE18DC821ABBD9A00EB8D79 /* Tray */,
 				3B5BDEB521795F6F008EEA33 /* AppDelegate.h */,
 				3B5BDEB621795F6F008EEA33 /* AppDelegate.m */,
 				3B5BDEB821795F6F008EEA33 /* ViewController.h */,
@@ -184,6 +191,17 @@
 				3B805D672182BC1F00455C54 /* CanvasViewController.m */,
 			);
 			path = Canvas;
+			sourceTree = "<group>";
+		};
+		3BE18DC821ABBD9A00EB8D79 /* Tray */ = {
+			isa = PBXGroup;
+			children = (
+				3BE18DCC21ACFA2700EB8D79 /* TrayViewController.h */,
+				3BE18DCD21ACFA2700EB8D79 /* TrayViewController.m */,
+				3BE18DC921ABBDBD00EB8D79 /* TrayView.h */,
+				3BE18DCA21ABBDBD00EB8D79 /* TrayView.m */,
+			);
+			path = Tray;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -323,7 +341,9 @@
 				3B71B292218668EB00230D89 /* InstructionView.m in Sources */,
 				3B805D622182370B00455C54 /* WalkthroughView.m in Sources */,
 				3B805D682182BC1F00455C54 /* CanvasViewController.m in Sources */,
+				3BE18DCE21ACFA2700EB8D79 /* TrayViewController.m in Sources */,
 				3B805D652182BC0C00455C54 /* CanvasView.m in Sources */,
+				3BE18DCB21ABBDBD00EB8D79 /* TrayView.m in Sources */,
 				3B805D5F2182366F00455C54 /* WalkthroughViewController.m in Sources */,
 				3B5BDEB721795F6F008EEA33 /* AppDelegate.m in Sources */,
 				3B71B2AA21951CBE00230D89 /* InstructionPaneViewController.m in Sources */,

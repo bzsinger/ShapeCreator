@@ -11,14 +11,19 @@
 #import "WalkthroughViewController.h"
 #import "CanvasView.h"
 #import "CanvasViewController.h"
+#import "TrayView.h"
+#import "TrayViewController.h"
 
-@interface ViewController () {
+@interface ViewController () <TrayViewDelegate> {
     WalkthroughViewController *_walkthroughViewController;
     CanvasViewController *_canvasViewController;
     CanvasView *_canvasView;
 
     UIButton *_saveButton;
     UIAlertController *_imageSaveAlert;
+
+    TrayView *_trayView;
+    TrayViewController *_trayViewController;
 };
 
 @end
@@ -33,19 +38,6 @@
     _canvasViewController = [[CanvasViewController alloc] initWithCanvasView:_canvasView];
     [self.view addSubview:_canvasView];
 
-    _saveButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [_saveButton setTitle:@"Save" forState:UIControlStateNormal];
-    [self.view addSubview:_saveButton];
-    [_saveButton addTarget:self action:@selector(saveSnapshot) forControlEvents:UIControlEventTouchUpInside];
-
-    [_saveButton sizeToFit];
-    CGSize saveButtonSize = _saveButton.frame.size;
-    _saveButton.frame = CGRectMake(CGRectGetMaxX(self.view.frame) - saveButtonSize.width - 10,
-                                   CGRectGetMaxY(self.view.frame) - saveButtonSize.height - 5,
-                                   saveButtonSize.width,
-                                   saveButtonSize.height);
-    [self.view addSubview:_saveButton];
-
     _imageSaveAlert = [UIAlertController alertControllerWithTitle:@""
                                                  message:@"Saving art..."
                                           preferredStyle:UIAlertControllerStyleAlert];
@@ -53,6 +45,11 @@
     WalkthroughView *walkthroughView = [[WalkthroughView alloc] initWithFrame:self.view.frame];
     _walkthroughViewController = [[WalkthroughViewController alloc] initWithWalkthroughView:walkthroughView];
     [self.view addSubview:walkthroughView];
+
+    _trayView = [[TrayView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame) - 50, 100, 200, 150)];
+    _trayView.delegate = self;
+    _trayViewController = [[TrayViewController alloc] initWithTrayView:_trayView];
+    [self.view addSubview:_trayView];
 }
 
 - (BOOL)canBecomeFirstResponder {
@@ -65,7 +62,8 @@
     }
 }
 
-- (void)saveSnapshot {
+- (void)saveButtonTapped {
+    [_trayViewController closeTrayView];
     [self presentViewController:_imageSaveAlert animated:YES completion:nil];
 
     UIGraphicsBeginImageContextWithOptions(_canvasView.bounds.size, _canvasView.opaque, 0.0f);
@@ -81,6 +79,11 @@
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
     [_imageSaveAlert dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)walkthroughButtonTapped {
+    [_trayViewController closeTrayView];
+    [_walkthroughViewController showWalkthroughView];
 }
 
 @end

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TrayView.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <TrayViewDelegate>
 
 
 @end

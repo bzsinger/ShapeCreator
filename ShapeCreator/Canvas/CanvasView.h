@@ -10,4 +10,6 @@
 
 @interface CanvasView : UIView
 
+@property (nonatomic, strong, readonly) UIView *drawingView;
+
 @end

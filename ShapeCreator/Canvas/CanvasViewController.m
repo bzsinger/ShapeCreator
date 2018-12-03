@@ -113,7 +113,7 @@
 
     UIView *square = tapGestureRecognizer.view;
     if (tapGestureRecognizer.state == UIGestureRecognizerStateEnded) {
-        [_canvasView bringSubviewToFront:square];
+        [_canvasView.drawingView bringSubviewToFront:square];
     }
 }
 

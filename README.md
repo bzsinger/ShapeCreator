@@ -36,6 +36,7 @@ Here's a walkthrough of implemented user stories:
 
 - [ ] Custom color choices
     - [ ] Expandable color wheel selector
+    - [ ] Force-touch to show color picker
 - [ ] Choose other shapes
     - [ ] Circles
     - [ ] Squares
@@ -43,3 +44,4 @@ Here's a walkthrough of implemented user stories:
 - [ ] Walkthrough animations
 - [ ] Pinch to expand squares
 - [ ] Rotate squares
+- [ ] Separately open-source walkthrough view

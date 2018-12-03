@@ -16,14 +16,16 @@
 
 @interface ViewController () <TrayViewDelegate> {
     WalkthroughViewController *_walkthroughViewController;
-    CanvasViewController *_canvasViewController;
-    CanvasView *_canvasView;
 
-    UIButton *_saveButton;
-    UIAlertController *_imageSaveAlert;
+    CanvasView *_canvasView;
+    CanvasViewController *_canvasViewController;
 
     TrayView *_trayView;
     TrayViewController *_trayViewController;
+
+    UIAlertController *_imageSaveAlert;
+
+    UIImpactFeedbackGenerator *_feedbackGenerator;
 };
 
 @end
@@ -39,8 +41,10 @@
     [self.view addSubview:_canvasView];
 
     _imageSaveAlert = [UIAlertController alertControllerWithTitle:@""
-                                                 message:@"Saving art..."
-                                          preferredStyle:UIAlertControllerStyleAlert];
+                                                          message:@"Saving art..."
+                                                   preferredStyle:UIAlertControllerStyleAlert];
+
+    _feedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleHeavy];
 
     WalkthroughView *walkthroughView = [[WalkthroughView alloc] initWithFrame:self.view.frame];
     _walkthroughViewController = [[WalkthroughViewController alloc] initWithWalkthroughView:walkthroughView];
@@ -78,6 +82,12 @@
 }
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+    [self->_feedbackGenerator impactOccurred];
+    [_imageSaveAlert setMessage:@"Saved"];
+    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(hideSaved) userInfo:nil repeats:NO];
+}
+
+- (void)hideSaved {
     [_imageSaveAlert dismissViewControllerAnimated:YES completion:nil];
 }
 

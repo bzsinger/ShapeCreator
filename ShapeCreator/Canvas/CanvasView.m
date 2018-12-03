@@ -10,4 +10,16 @@
 
 @implementation CanvasView
 
+- (instancetype)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
+        _drawingView = [[UIView alloc] initWithFrame:CGRectZero];
+        [self addSubview:_drawingView];
+    }
+    return self;
+}
+
+- (void)layoutSubviews {
+    _drawingView.frame = self.frame;
+}
+
 @end

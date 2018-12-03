@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "CanvasView.h"
+#import "ColorPickerViewController.h"
 
-@interface CanvasViewController : UIViewController
+@interface CanvasViewController : UIViewController <ColorPickerDelegate>
 
 - (instancetype)initWithCanvasView:(CanvasView *)canvasView;
 

@@ -25,9 +25,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithColorPickerView:(ColorPickerView *)colorPickerView;
 
+- (UIColor *)getColorValues;
+
 - (void)setColorValues:(UIColor *)color;
 
-- (UIColor *)getColorValues;
+- (void)showColorPicker;
+
+- (void)hideColorPicker;
 
 @end
 

@@ -48,6 +48,11 @@
     [_delegate colorValuesChanged:self];
 }
 
+- (UIColor *)getColorValues {
+    UIColor *currentColor = [[UIColor alloc] initWithRed:_colorPickerView.redSlider.value green:_colorPickerView.greenSlider.value blue:_colorPickerView.blueSlider.value alpha:1];
+    return currentColor;
+}
+
 - (void)setColorValues:(UIColor *)color {
     const CGFloat *colorComponents = CGColorGetComponents(color.CGColor);
     _colorPickerView.redSlider.value = colorComponents[0];
@@ -55,9 +60,12 @@
     _colorPickerView.blueSlider.value = colorComponents[2];
 }
 
-- (UIColor *)getColorValues {
-    UIColor *currentColor = [[UIColor alloc] initWithRed:_colorPickerView.redSlider.value green:_colorPickerView.greenSlider.value blue:_colorPickerView.blueSlider.value alpha:1];
-    return currentColor;
+- (void)hideColorPicker {
+    [_colorPickerView setHidden:YES];
+}
+
+- (void)showColorPicker {
+    [_colorPickerView setHidden:NO];
 }
 
 @end

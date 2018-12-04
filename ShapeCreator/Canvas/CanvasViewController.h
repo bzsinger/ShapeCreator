@@ -14,4 +14,6 @@
 
 - (instancetype)initWithCanvasView:(CanvasView *)canvasView;
 
+- (UIImage *)getCanvasSnapshot;
+
 @end

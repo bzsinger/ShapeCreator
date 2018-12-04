@@ -17,28 +17,27 @@
 @implementation CanvasViewController {
     CanvasView *_canvasView;
 
+    ColorPickerView *_colorPickerView;
+    ColorPickerViewController *_colorPickerViewController;
+
     UIImpactFeedbackGenerator *_feedbackGenerator;
 
     UIView *_currentSquare;
     CGPoint _currentOrigin;
     CGPoint _currentCenter;
-
-    ColorPickerViewController *_colorPickerViewController;
-    ColorPickerView *_colorPickerView;
 }
 
 - (instancetype)initWithCanvasView:(CanvasView *)canvasView {
     if (self = [super init]) {
         _canvasView = canvasView;
+
         [_canvasView.drawingView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPanAcrossScreen:)]];
+        [_canvasView.drawingView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapCanvas:)]];
 
         UIPanGestureRecognizer *clearPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPerformClearScreenPan:)];
         [clearPanGestureRecognizer setMaximumNumberOfTouches:2];
         [clearPanGestureRecognizer setMinimumNumberOfTouches:2];
         [_canvasView.drawingView addGestureRecognizer:clearPanGestureRecognizer];
-
-        UITapGestureRecognizer *tapCanvasGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapCanvas:)];
-        [_canvasView.drawingView addGestureRecognizer:tapCanvasGestureRecognizer];
 
         _feedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleMedium];
 
@@ -59,7 +58,6 @@
         _currentSquare = [[UIView alloc] initWithFrame:CGRectMake(_currentOrigin.x, _currentOrigin.y, 0, 0)];
         _currentSquare.backgroundColor = [UIColor colorWithRed:(arc4random_uniform(256) / 256.0) green:(arc4random_uniform(256) / 256.0) blue:(arc4random_uniform(256) / 256.0) alpha:1];
 
-        _currentSquare.userInteractionEnabled = TRUE;
         [_currentSquare addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didMoveSquare:)]];
 
         UITapGestureRecognizer *singleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didSingleTap:)];
@@ -136,24 +134,41 @@
         [_colorPickerViewController showColorPicker];
 
         CGPoint possibleCenters[] = {
-            CGPointMake(CGRectGetMinX(square.frame), CGRectGetMinY(square.frame)),
-            CGPointMake(CGRectGetMaxX(square.frame), CGRectGetMinY(square.frame)),
+            // TL
+            CGPointMake(CGRectGetMinX(square.frame),
+                        CGRectGetMinY(square.frame)),
+            // TMid
+            CGPointMake(CGRectGetMinX(square.frame) + CGRectGetWidth(square.frame) / 2,
+                        CGRectGetMinY(square.frame)),
+            // TR
+            CGPointMake(CGRectGetMaxX(square.frame),
+                        CGRectGetMinY(square.frame)),
+            // MidR
+            CGPointMake(CGRectGetMaxX(square.frame),
+                        CGRectGetMinY(square.frame) + CGRectGetHeight(square.frame) / 2),
+            // MidL
+            CGPointMake(CGRectGetMinX(square.frame),
+                        CGRectGetMinY(square.frame) + CGRectGetHeight(square.frame) / 2),
+            // BR
+            CGPointMake(CGRectGetMaxX(square.frame),
+                        CGRectGetMaxY(square.frame)),
+            // BMid
+            CGPointMake(CGRectGetMinX(square.frame) + CGRectGetWidth(square.frame) / 2,
+                        CGRectGetMaxY(square.frame)),
+            // BL
             CGPointMake(CGRectGetMinX(square.frame), CGRectGetMaxY(square.frame)),
-            CGPointMake(CGRectGetMaxX(square.frame), CGRectGetMaxY(square.frame)),
             square.center
         };
 
         _colorPickerView.center = CGPointZero;
         CGFloat minOverflow = CGFLOAT_MAX;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < sizeof(possibleCenters) / sizeof(possibleCenters[0]); i++) {
             CGFloat overflowLeft = possibleCenters[i].x - CGRectGetWidth(_colorPickerView.frame) / 2;
             CGFloat overflowRight = possibleCenters[i].x + CGRectGetWidth(_colorPickerView.frame) / 2;
-            CGFloat overflowTop = possibleCenters[i].y - CGRectGetHeight(_colorPickerView.frame) / 2 > 0;
+            CGFloat overflowTop = possibleCenters[i].y - CGRectGetHeight(_colorPickerView.frame) / 2;
             CGFloat overflowBottom = possibleCenters[i].y + CGRectGetHeight(_colorPickerView.frame) / 2;
-            if (overflowLeft > 0 &&
-                overflowRight < CGRectGetWidth(_canvasView.frame) &&
-                overflowTop > 0 &&
-                overflowBottom < CGRectGetHeight(_canvasView.frame)) {
+            if (overflowLeft > 0 && overflowRight < CGRectGetWidth(_canvasView.frame) &&
+                overflowTop > 10 && overflowBottom < CGRectGetHeight(_canvasView.frame)) {
                 _colorPickerView.center = possibleCenters[i];
                 break;
             } else {
@@ -166,7 +181,7 @@
                     overflow += CGRectGetWidth(_canvasView.frame) - overflowRight;
                 }
 
-                if (overflowTop < 0) {
+                if (overflowTop < 10) {
                     overflow += overflowTop;
                 }
 
@@ -181,6 +196,7 @@
             }
         }
 
+        [_feedbackGenerator impactOccurred];
         [_canvasView bringSubviewToFront:_colorPickerView];
         [_colorPickerViewController setColorValues:square.backgroundColor];
         _currentSquare = square;
@@ -193,6 +209,18 @@
 
 - (void)colorValuesChanged:(ColorPickerViewController *)colorPickerViewController {
     _currentSquare.backgroundColor = [colorPickerViewController getColorValues];
+}
+
+- (UIImage *)getCanvasSnapshot {
+    UIGraphicsBeginImageContextWithOptions(_canvasView.drawingView.bounds.size, _canvasView.drawingView.opaque, 0.0f);
+    CGContextRef graphicsContext = UIGraphicsGetCurrentContext();
+    [[UIColor whiteColor] setFill];
+    CGContextFillRect(graphicsContext, CGRectMake(0, 0, _canvasView.drawingView.frame.size.width, _canvasView.drawingView.frame.size.height));
+    [_canvasView.drawingView drawViewHierarchyInRect:_canvasView.drawingView.bounds afterScreenUpdates:NO];
+    UIImage *snapshotImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return snapshotImage;
 }
 
 @end

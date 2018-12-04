@@ -24,7 +24,6 @@
     TrayViewController *_trayViewController;
 
     UIAlertController *_imageSaveAlert;
-
     UIImpactFeedbackGenerator *_feedbackGenerator;
 };
 
@@ -40,12 +39,6 @@
     _canvasViewController = [[CanvasViewController alloc] initWithCanvasView:_canvasView];
     [self.view addSubview:_canvasView];
 
-    _imageSaveAlert = [UIAlertController alertControllerWithTitle:@""
-                                                          message:@"Saving art..."
-                                                   preferredStyle:UIAlertControllerStyleAlert];
-
-    _feedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleHeavy];
-
     WalkthroughView *walkthroughView = [[WalkthroughView alloc] initWithFrame:self.view.frame];
     _walkthroughViewController = [[WalkthroughViewController alloc] initWithWalkthroughView:walkthroughView];
     [self.view addSubview:walkthroughView];
@@ -54,6 +47,10 @@
     _trayView.delegate = self;
     _trayViewController = [[TrayViewController alloc] initWithTrayView:_trayView];
     [self.view addSubview:_trayView];
+
+    _imageSaveAlert = [UIAlertController alertControllerWithTitle:@""
+                                                          message:@"Saving art..."
+                                                   preferredStyle:UIAlertControllerStyleAlert];
 }
 
 - (BOOL)canBecomeFirstResponder {
@@ -69,21 +66,12 @@
 - (void)saveButtonTapped {
     [_trayViewController closeTrayView];
     [self presentViewController:_imageSaveAlert animated:YES completion:nil];
-
-    UIGraphicsBeginImageContextWithOptions(_canvasView.bounds.size, _canvasView.opaque, 0.0f);
-    CGContextRef graphicsContext = UIGraphicsGetCurrentContext();
-    [[UIColor whiteColor] setFill];
-    CGContextFillRect(graphicsContext, CGRectMake(0, 0, _canvasView.frame.size.width, _canvasView.frame.size.height));
-    [_canvasView drawViewHierarchyInRect:_canvasView.bounds afterScreenUpdates:NO];
-    UIImage *snapshotImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-
-    UIImageWriteToSavedPhotosAlbum(snapshotImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    UIImageWriteToSavedPhotosAlbum([_canvasViewController getCanvasSnapshot], self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
 }
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
-    [self->_feedbackGenerator impactOccurred];
     [_imageSaveAlert setMessage:@"Saved"];
+    [_feedbackGenerator impactOccurred];
     [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(hideSaved) userInfo:nil repeats:NO];
 }
 
